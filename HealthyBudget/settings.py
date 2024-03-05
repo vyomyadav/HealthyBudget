@@ -87,10 +87,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'healthybudget',
-        'USER': 'root',
-        'PASSWORD': 'Harry6171616#',
+        'USER': 'admin',
+        'PASSWORD': 'admin12345',
         'PORT': 3306,
-        'HOST': 'localhost',
+        'HOST': 'healthybudget.cxsu8wq4ot48.us-east-2.rds.amazonaws.com',
     }
 }
 
