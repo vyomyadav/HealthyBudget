@@ -15,6 +15,11 @@ pymysql.install_as_MySQLdb()
 from pathlib import Path
 from . info import *
 
+import environ
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -86,11 +91,11 @@ WSGI_APPLICATION = 'HealthyBudget.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'healthybudget',
-        'USER': 'admin',
-        'PASSWORD': 'admin12345',
-        'PORT': 3306,
-        'HOST': 'healthybudget.cxsu8wq4ot48.us-east-2.rds.amazonaws.com',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'PORT': env('DATABASE_PORT'),
+        'HOST': env('DATABASE_HOST')
     }
 }
 
