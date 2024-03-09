@@ -11,6 +11,8 @@ pillow = "*"
 mysqlclient = "*"
 pymysql = "*"
 sqlparse = "*"
+djangorestframework = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
