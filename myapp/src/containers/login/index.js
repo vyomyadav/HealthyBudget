@@ -3,24 +3,47 @@ import { useEffect, useState } from 'react';
 import Logo from "../../../public/logo.png"
 import axios from "axios"
 
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+axios.defaults.withCredentials = true;
+const client = axios.create({
+  baseURL: "http://localhost:8000",
+})
+
 function Login() {
 
 
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  // const [user, setUser] = useState({});
 
-  const [user, setUser] = useState({});
+
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    client.post(
+      '/api/login',
+      {
+        email: email,
+        password: password
+      }
+    ).then(function (res) {
+      console.log("Logged In")
+    })
+  }
 
   function handleCallbackResponse(response) {
     console.log("Encoded JWT ID token: " + response.credential);
     var userObject = jwtDecode(response.credential);
     console.log(userObject);
-    setUser(userObject);
-    document.getElementById("signInDiv").hidden = true;
+    // setUser(userObject);
+    // document.getElementById("signInDiv").hidden = true;
   }
 
-  function handleSignOut(event) {
-    setUser({});
-    document.getElementById("signInDiv").hidden = false;
-  }
+  // function handleSignOut(event) {
+  //   setUser({});
+  //   document.getElementById("signInDiv").hidden = false;
+  // }
   useEffect(() => {
     const loadGoogleAPI = () => {
       // Check if google is already defined
@@ -87,15 +110,15 @@ function Login() {
               <div className="divide-y divide-gray-200">
                 <div className="pt-10 py-10 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                   <div className="relative">
-                    <input aria-autocomplete='off' id="email" name="email" type="text" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
+                    <input aria-autocomplete='none' id="email" name="email" type="text" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" onChange={(e) => setEmail(e.target.value)} />
                     <label htmlFor="email" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email Address</label>
                   </div>
                   <div className="relative">
-                    <input id="password" name="password" type="password" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Password" />
+                    <input id="password" name="password" type="password" className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                     <label htmlFor="password" className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
                   </div>
                   <div className="relative pt-6">
-                    <button className="w-full rounded-2xl border-b-4 border-b-blue-600 bg-blue-500 py-2 font-bold text-white hover:bg-blue-400 active:translate-y-[0.125rem] active:border-b-blue-400">Sign In</button>
+                    <button className="w-full rounded-2xl border-b-4 border-b-blue-600 bg-blue-500 py-2 font-bold text-white hover:bg-blue-400 active:translate-y-[0.125rem] active:border-b-blue-400" onClick={e => handleSubmit(e)}>Sign In</button>
                   </div>
                   <div className="-m-2 pt-1 flex flex-col justify-center">
                     <div className="flex justify-center font-bold text-blue-600 text-sm cursor-pointer rounded-full" href="#">Forgot password?</div>

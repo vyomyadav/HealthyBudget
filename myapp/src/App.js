@@ -1,6 +1,5 @@
-import React from "react"
-
-import { Route, Navigate, Routes } from "react-router-dom"
+import React from "react";
+import { Route, Navigate, Routes } from "react-router-dom";
 
 import Routers from "./containers/routes"
 
