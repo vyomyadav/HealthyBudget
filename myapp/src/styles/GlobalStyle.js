@@ -1,11 +1,11 @@
 import { createGlobalStyle } from 'styled-components';
 
-export const GlobalStyles = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
     *{
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        list-style: none; 
+        list-style: none;
     }
 
     :root{
@@ -50,4 +50,4 @@ export const GlobalStyles = createGlobalStyle`
             }
         }
     }
-`
+`;
