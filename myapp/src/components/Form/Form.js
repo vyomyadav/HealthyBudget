@@ -7,7 +7,7 @@ import Button from "../Button/Button";
 import { useGlobalContext } from "../context/globalContext";
 
 function Form() {
-    const {addIncome} = useGlobalContext();
+    const {addIncome, getIncomes} = useGlobalContext();
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
@@ -25,6 +25,7 @@ function Form() {
     const handleSumbit = e => {
         e.preventDefault();
         addIncome(inputState);
+        getIncomes();
     }
 
     return (
