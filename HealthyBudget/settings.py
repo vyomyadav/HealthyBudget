@@ -14,6 +14,7 @@ pymysql.version_info = (1, 4, 6, 'final', 0)
 pymysql.install_as_MySQLdb()
 from pathlib import Path
 from . info import *
+import os
 
 import environ
 # Initialise environment variables
@@ -81,9 +82,11 @@ CSRF_TRUSTED_ORIGINS = [ 'http://localhost', 'http://127.0.0.1' ]
 
 ALLOWED_HOSTS = [
     'localhost',
+    '127.0.0.1'
 ]
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
+    
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
@@ -170,6 +173,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
