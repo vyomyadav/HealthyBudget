@@ -2,6 +2,7 @@ import { jwtDecode } from 'jwt-decode';
 import { useEffect, useState } from 'react';
 import Logo from "../../../public/logo.png"
 import axios from "axios"
+import { useNavigate } from "react-router-dom";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -15,6 +16,7 @@ function Login() {
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const navigate = useNavigate();
   // const [user, setUser] = useState({});
 
 
@@ -28,7 +30,7 @@ function Login() {
         password: password
       }
     ).then(function (res) {
-      console.log("Logged In")
+        navigate("/homepage");
     })
   }
 

@@ -1,16 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
-import Dashboard from '../components/Dashboard/Dashboard';
-import Expenses from '../components/Expenses/Expenses';
-import Incomes from '../components/Incomes/Incomes';
-import Navigation from '../components/Navigation/Navigation';
-import Orb from '../components/Orb/Orb';
-import { useGlobalContext } from '../components/context/globalContext';
-import { MainLayout } from '../styles/Layouts';
+import Dashboard from '../../components/Dashboard/Dashboard';
+import Expenses from '../../components/Expenses/Expenses';
+import Incomes from '../../components/Incomes/Incomes';
+import Navigation from '../../components/Navigation/Navigation';
+import Orb from '../../components/Orb/Orb';
+import { useGlobalContext } from '../../components/context/globalContext';
+import { MainLayout } from '../../styles/Layouts';
 
 const backgroundUrl = '/background.png';
 
-const HomePage = () => {
+function Homepage() {
 
 
   const global = useGlobalContext();
@@ -67,4 +67,4 @@ const AppStyled = styled.div`
 `;
 
 
-export default HomePage;
+export default Homepage;
