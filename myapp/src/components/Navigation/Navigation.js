@@ -2,12 +2,37 @@ import React from "react";
 import styled from "styled-components";
 import { signout } from "../../utils/Icons";
 import { menuItems } from "../../utils/menuItems";
+import { useNavigate } from "react-router-dom";
+import axios from "axios"
+
+
+axios.defaults.xsrfCookieName = "csrftoken";
+axios.defaults.xsrfHeaderName = "X-CSRFToken";
+axios.defaults.withCredentials = true;
+const client = axios.create({
+    baseURL: "http://localhost:8000",
+})
+
+
 
 function Navigation({ active, setActive }) {
+
+
+    const navigate = useNavigate();
+
+    function handleLogout(e) {
+        e.preventDefault();
+        client.post(
+            '/api/logout'
+        ).then(function (res) {
+            navigate("/login");
+        })
+    }
+
     return (
         <NavStyled>
             <div className="user-con">
-                <img src="/temp_profile_photo.jpeg" alt=""/>
+                <img src="/temp_profile_photo.jpeg" alt="" />
                 <div className="text">
                     <h2>Test User</h2>
                     <p>Healthy Budget</p>
@@ -19,7 +44,7 @@ function Navigation({ active, setActive }) {
                         <li
                             key={item.id}
                             onClick={() => setActive(item.id)}
-                            className={active === item.id ? 'active': ''}
+                            className={active === item.id ? 'active' : ''}
                         >
                             {item.icon}
                             <span>{item.title}</span>
@@ -27,7 +52,7 @@ function Navigation({ active, setActive }) {
                     )
                 })}
             </ul>
-            <div className="bottom-nav">
+            <div className="bottom-nav cursor-pointer" onClick={handleLogout}>
                 <li>
                     {signout} Sign Out
                 </li>

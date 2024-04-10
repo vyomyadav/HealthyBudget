@@ -79,9 +79,8 @@ CORS_ALLOWED_ORIGINS = [
 
 CSRF_TRUSTED_ORIGINS = [ 'http://localhost', 'http://127.0.0.1' ]
 
-ALLOWED_HOSTS = [
-    'localhost',
-]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
 ]
