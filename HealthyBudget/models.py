@@ -44,3 +44,25 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return self.email
+
+class Expense(models.Model):
+    title = models.CharField(max_length=50, blank=False, null=False)
+    amount = models.DecimalField(max_digits=20, decimal_places=2, blank=False, null=False)  # Assuming two decimal places for currency
+    type = models.CharField(max_length=50, default='expense', blank=False, null=False)
+    date = models.DateField(blank=False, null=False)
+    category = models.CharField(max_length=50, blank=False, null=False)
+    description = models.CharField(max_length=200, blank=False, null=False)  # Adjusted maxLength to 200 for more flexibility
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+class Income(models.Model):
+    title = models.CharField(max_length=50, blank=False, null=False)
+    amount = models.DecimalField(max_digits=20, decimal_places=2, blank=False, null=False)
+    type = models.CharField(max_length=50, default='income', blank=False, null=False)
+    date = models.DateField(blank=False, null=False)
+    category = models.CharField(max_length=50, blank=False, null=False)
+    description = models.CharField(max_length=200, blank=False, null=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
