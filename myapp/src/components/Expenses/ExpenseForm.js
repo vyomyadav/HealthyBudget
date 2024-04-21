@@ -6,34 +6,37 @@ import { plus } from '../../utils/Icons';
 import Button from '../Button/Button';
 import { useGlobalContext } from '../context/globalContext';
 
-
 function ExpenseForm() {
-    const {addExpense, error, setError} = useGlobalContext()
+    const { addTransaction, getTransactions, error, setError } = useGlobalContext(); // Updated to use addTransaction
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
-        date: '',
+        date: new Date(), // Set default to new Date()
         category: '',
         description: '',
-    })
+        type: 'expense' // Explicitly setting the transaction type
+    });
 
-    const { title, amount, date, category,description } = inputState;
+    const { title, amount, date, category, description } = inputState;
 
     const handleInput = name => e => {
-        setInputState({...inputState, [name]: e.target.value})
-        setError('')
+        const value = e.target ? e.target.value : e;
+        setInputState({...inputState, [name]: value});
+        setError('');
     }
 
     const handleSubmit = e => {
-        e.preventDefault()
-        addExpense(inputState)
-        setInputState({
+        e.preventDefault();
+        addTransaction(inputState); // Using the unified addTransaction method
+        getTransactions(); // Update the list after adding
+        setInputState({ // Reset form fields
             title: '',
             amount: '',
-            date: '',
+            date: new Date(),
             category: '',
             description: '',
-        })
+            type: 'expense' // Reset type to ensure it's always set to expense
+        });
     }
 
     return (
@@ -49,8 +52,9 @@ function ExpenseForm() {
                 />
             </div>
             <div className="input-control">
-                <input value={amount}  
-                    type="text" 
+                <input 
+                    type="number" // Changing to type number for better validation
+                    value={amount}
                     name={'amount'} 
                     placeholder={'Expense Amount'}
                     onChange={handleInput('amount')} 
@@ -62,14 +66,14 @@ function ExpenseForm() {
                     placeholderText='Enter A Date'
                     selected={date}
                     dateFormat="MM/dd/yyyy"
-                    onChange={(date) => {
-                        setInputState({...inputState, date: date})
+                    onChange={(newDate) => {
+                        setInputState({...inputState, date: newDate})
                     }}
                 />
             </div>
             <div className="selects input-control">
                 <select required value={category} name="category" id="category" onChange={handleInput('category')}>
-                    <option value="" disabled >Select Option</option>
+                    <option value="" disabled>Select Option</option>
                     <option value="education">Education</option>
                     <option value="groceries">Groceries</option>
                     <option value="health">Health</option>
@@ -81,7 +85,15 @@ function ExpenseForm() {
                 </select>
             </div>
             <div className="input-control">
-                <textarea name="description" value={description} placeholder='Add A Reference' id="description" cols="30" rows="4" onChange={handleInput('description')}></textarea>
+                <textarea 
+                    name="description" 
+                    value={description} 
+                    placeholder='Add A Reference' 
+                    id="description" 
+                    cols="30" 
+                    rows="4" 
+                    onChange={handleInput('description')}
+                ></textarea>
             </div>
             <div className="submit-btn">
                 <Button 
@@ -89,14 +101,13 @@ function ExpenseForm() {
                     icon={plus}
                     bPad={'.8rem 1.6rem'}
                     bRad={'30px'}
-                    bg={'var(--color-accent'}
+                    bg={'var(--color-accent)'}
                     color={'#fff'}
                 />
             </div>
         </ExpenseFormStyled>
     )
 }
-
 
 const ExpenseFormStyled = styled.form`
     display: flex;

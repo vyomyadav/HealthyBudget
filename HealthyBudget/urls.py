@@ -23,10 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
     path('api/', include('myapi.urls')),
-    path('budget/incomes/add/', views.add_income, name='add_income'),
-    path('budget/expenses/add/', views.add_expense, name='add_expense'),
-    path('budget/incomes/', views.get_incomes, name='get_incomes'),
-    path('budget/expenses/', views.get_expenses, name='get_expenses'),
-    path('budget/incomes/delete/<int:id>/', views.delete_income, name='delete_income'),
-    path('budget/expenses/delete/<int:id>/', views.delete_expense, name='delete_expense'),
+    path('budget/transactions/add/', views.add_transaction, name='add_transaction'),
+    path('budget/transactions/', views.get_transactions, name='get_transactions'),
+    path('budget/transactions/delete/<int:id>/', views.delete_transaction, name='delete_transaction'),
 ]

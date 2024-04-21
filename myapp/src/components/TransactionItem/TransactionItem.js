@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { bitcoin, book, calender, card, circle, clothing, comment, dollar, food, freelance, medical, money, piggy, stocks, takeaway, trash, tv, users, yt } from "../../utils/Icons";
+import {
+    bitcoin, book, calender, card, circle, clothing, comment, dollar,
+    food, freelance, medical, money, piggy, stocks, takeaway, trash, tv, users, yt
+} from "../../utils/Icons";
 import { dateFormat } from "../../utils/dateFormat";
 import Button from "../Button/Button";
 
-function IncomeItem({
+function TransactionItem({
     id,
     title,
     amount,
@@ -15,59 +18,39 @@ function IncomeItem({
     indicatorColor,
     type
 }) {
-
-    const categoryIcon = () =>{
-        switch(category) {
-            case 'salary':
-                return money;
-            case 'freelancing':
-                return freelance
-            case 'investments':
-                return stocks;
-            case 'stocks':
-                return users;
-            case 'bitcoin':
-                return bitcoin;
-            case 'bank':
-                return card;
-            case 'youtube':
-                return yt;
-            case 'other':
-                return piggy;
-            default:
-                return ''
+    // Dynamically determine the icon based on type and category
+    const categoryIcon = () => {
+        if (type === 'income') {
+            switch(category) {
+                case 'salary': return money;
+                case 'freelancing': return freelance;
+                case 'investments': return stocks;
+                case 'stocks': return users;
+                case 'bitcoin': return bitcoin;
+                case 'bank': return card;
+                case 'youtube': return yt;
+                case 'other': return piggy;
+                default: return '';
+            }
+        } else {  // type === 'expense'
+            switch(category) {
+                case 'education': return book;
+                case 'groceries': return food;
+                case 'health': return medical;
+                case 'subscriptions': return tv;
+                case 'takeaways': return takeaway;
+                case 'clothing': return clothing;
+                case 'travelling': return freelance;  // May need a specific icon for travelling
+                case 'other': return circle;
+                default: return '';
+            }
         }
     }
-
-    const expenseCatIcon = () => {
-        switch (category) {
-            case 'education':
-                return book;
-            case 'groceries':
-                return food;
-            case 'health':
-                return medical;
-            case 'subscriptions':
-                return tv;
-            case 'takeaways':
-                return takeaway;
-            case 'clothing':
-                return clothing;
-            case 'travelling':
-                return freelance;
-            case 'other':
-                return circle;
-            default:
-                return ''
-        }
-    }
-
-    console.log('type', type)
 
     return (
-        <IncomeItemStyled indicator={indicatorColor}>
+        <TransactionItemStyled indicator={indicatorColor}>
             <div className="icon">
-                {type === 'expense' ? expenseCatIcon() : categoryIcon()}
+                {categoryIcon()}
             </div>
             <div className="content">
                 <h5>{title}</h5>
@@ -85,7 +68,7 @@ function IncomeItem({
                             icon={trash}
                             bPad={'1rem'}
                             bRad={'50%'}
-                            bg={'var(--primary-color'}
+                            bg={'var(--primary-color)'}
                             color={'#fff'}
                             iColor={'#fff'}
                             hColor={'var(--color-green)'}
@@ -94,12 +77,12 @@ function IncomeItem({
                     </div>
                 </div>
             </div>
-        </IncomeItemStyled>
+        </TransactionItemStyled>
     )
-
 }
 
-const IncomeItemStyled = styled.div`
+
+const TransactionItemStyled = styled.div`
     background: #FCF6F9;
     border: 2px solid #FFFFFF;
     box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);
@@ -168,4 +151,4 @@ const IncomeItemStyled = styled.div`
 `;
 
 
-export default IncomeItem;
+export default TransactionItem;

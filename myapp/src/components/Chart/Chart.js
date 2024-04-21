@@ -10,7 +10,6 @@ import {
     Tooltip,
 } from 'chart.js'
 import React from 'react'
-
 import { Line } from 'react-chartjs-2'
 import styled from 'styled-components'
 import { dateFormat } from '../../utils/dateFormat'
@@ -28,42 +27,33 @@ ChartJs.register(
 )
 
 function Chart() {
-    const {incomes, expenses} = useGlobalContext()
+    const { transactions } = useGlobalContext()  // Use unified transactions list
+
+    const incomes = transactions.filter(trans => trans.type === 'income');
+    const expenses = transactions.filter(trans => trans.type === 'expense');
 
     const data = {
-        labels: incomes.map((inc) =>{
-            const {date} = inc
-            return dateFormat(date)
-        }),
+        labels: transactions.map((trans) => dateFormat(trans.date)),  // Use unified transaction dates
         datasets: [
             {
                 label: 'Income',
-                data: [
-                    ...incomes.map((income) => {
-                        const {amount} = income
-                        return amount
-                    })
-                ],
-                backgroundColor: 'green',
-                tension: .2
+                data: incomes.map(income => income.amount),
+                borderColor: 'green',
+                backgroundColor: 'rgba(0, 128, 0, 0.5)',
+                tension: 0.2
             },
             {
                 label: 'Expenses',
-                data: [
-                    ...expenses.map((expense) => {
-                        const {amount} = expense
-                        return amount
-                    })
-                ],
-                backgroundColor: 'red',
-                tension: .2
+                data: expenses.map(expense => expense.amount),
+                borderColor: 'red',
+                backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                tension: 0.2
             }
         ]
     }
 
-
     return (
-        <ChartStyled >
+        <ChartStyled>
             <Line data={data} />
         </ChartStyled>
     )
