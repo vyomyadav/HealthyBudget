@@ -22,5 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
     path('api/', include('myapi.urls')),
-    path('api/', include('home_page_database.urls')),
+    path('budget/', include('home_page_database.urls')),
 ]

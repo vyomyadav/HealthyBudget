@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useContext, useState } from "react";
 
 
-const BASE_URL = "http://localhost:8000/api/";
+const BASE_URL = "http://localhost:8000/budget";
 
 
 const GlobalContext = React.createContext()
@@ -15,7 +15,7 @@ export const GlobalProvider = ({children}) => {
 
     //calculate incomes
     const addIncome = async (income) => {
-        const response = await axios.post(`${BASE_URL}incomes/add/`, income)
+        const response = await axios.post(`${BASE_URL}/incomes/add/`, income)
             .catch((err) =>{
                 setError(err.response.data.message)
             })
@@ -23,7 +23,7 @@ export const GlobalProvider = ({children}) => {
     }
 
     const getIncomes = async () => {
-        const response = await axios.get(`${BASE_URL}incomes/`)
+        const response = await axios.get(`${BASE_URL}/incomes/`)
         setIncomes(response.data)
         console.log(response.data)
     }
@@ -36,7 +36,7 @@ export const GlobalProvider = ({children}) => {
     const totalIncome = () => {
         let totalIncome = 0;
         incomes.forEach((income) =>{
-            totalIncome = totalIncome + income.amount
+            totalIncome += parseFloat(income.amount);
         })
 
         return totalIncome;
@@ -45,7 +45,7 @@ export const GlobalProvider = ({children}) => {
 
     //calculate incomes
     const addExpense = async (income) => {
-        const response = await axios.post(`${BASE_URL}/expenses/add`, income)
+        const response = await axios.post(`${BASE_URL}/expenses/add/`, income)
             .catch((err) =>{
                 setError(err.response.data.message)
             })
@@ -59,17 +59,18 @@ export const GlobalProvider = ({children}) => {
     }
 
     const deleteExpense = async (id) => {
-        const res  = await axios.delete(`${BASE_URL}/expenses//delete/${id}/`)
+        const res  = await axios.delete(`${BASE_URL}/expenses/delete/${id}/`)
         getExpenses()
     }
 
     const totalExpenses = () => {
-        let totalIncome = 0;
-        expenses.forEach((income) =>{
-            totalIncome = totalIncome + income.amount
+        let totalExpense = 0;
+        expenses.forEach((expense) =>{
+            //totalIncome = totalIncome + income.amount
+            totalExpense += parseFloat(expense.amount);
         })
 
-        return totalIncome;
+        return totalExpense;
     }
 
 
