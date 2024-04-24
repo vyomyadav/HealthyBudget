@@ -114,7 +114,7 @@
     </style>
 </head>
 <script src="//code.tidio.co/hvhhhvia8troqdmfwbph2qrulwa9ajcl.js" async></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.5/sweetalert2.all.min.js"></script>
 <body>
     <div class="wrapper mt-sm-5">
         <form method="POST" enctype="multipart/form-data">
@@ -128,9 +128,9 @@
             <div class="pl-sm-4 pl-2" id="img-section">
                 <b>Profile Photo</b>
                 <p>Accepted file type .png. Less than 1MB</p>
-                    {{ p_form.image }}
                     <label for="file-input" class="btn button border"><b>Upload</b></label>
                     <input type="file" id="file-input" style="display: none;" name="image" onchange="loadFile(event)">
+                    
                 
             </div>
         </div>
@@ -138,25 +138,24 @@
             <div class="row py-2">
                 <div class="col-md-6">
                     <label for="firstname">First Name</label>
-                    <input type="text" class="bg-light form-control" placeholder="Emma">
-                    {{u_form.first_name}}
+                    {{p_form.first_name}}
                     
                 </div>
                 <div class="col-md-6 pt-md-0 pt-3">
                     <label for="lastname">Last Name</label>
-                    <input type="text" class="bg-light form-control" placeholder="Smith">
+                    {{p_form.last_name}}
                    
                 </div>
             </div>
             <div class="row py-2">
                 <div class="col-md-6">
                     <label for="email">Email Address</label>
-                    <input type="text" class="bg-light form-control" placeholder="emma_@email.com">
+                    {{p_form.email}}
                  
                 </div>
                 <div class="col-md-6 pt-md-0 pt-3">
                     <label for="phone">Phone Number</label>
-                    <input type="tel" class="bg-light form-control" placeholder="+1 213-548-6015">
+                    {{p_form.phone}}
                    
                 </div>
             </div>
@@ -211,3 +210,5 @@
     </script>
 </body>
 </html>
+{% load sweetify %}
+{% sweetify %}

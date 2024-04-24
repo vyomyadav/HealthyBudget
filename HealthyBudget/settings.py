@@ -59,7 +59,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'myapi',
-    'shortuuid'
+    'shortuuid',
+    'sweetify',
 ]
 
 MIDDLEWARE = [

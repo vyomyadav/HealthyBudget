@@ -12,7 +12,7 @@ from .validations import custom_validation, validate_email, validate_password
 from django.contrib.auth.decorators import login_required
 from myapi.forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
-
+import sweetify
 
 
 # @api_view(['GET'])
@@ -71,18 +71,19 @@ def profile(request):
 
 	if request.method == "POST":
 		u_form = UserUpdateForm(request.POST, instance=request.user)
-		p_form = UserUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
 
 		if u_form.is_valid() and p_form.is_valid():
 			u_form.save()
 			p_form.save()
 
+			sweetify.success(request, 'Profile updated successfully')
 			messages.success(request, "Profile updated successfully")
-			return redirect("api/profile")
+			return redirect("/api/profile")
 
 	else:
 		u_form = UserUpdateForm(instance=request.user)
-		p_form = UserUpdateForm(instance=request.user.profile)
+		p_form = ProfileUpdateForm(instance=request.user.profile)
 
 	context = {
 		"profile": profile,
