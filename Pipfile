@@ -13,6 +13,7 @@ pymysql = "*"
 sqlparse = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+cryptography = "*"
 
 [dev-packages]
 
