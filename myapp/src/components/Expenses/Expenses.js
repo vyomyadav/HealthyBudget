@@ -1,40 +1,42 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { InnerLayout } from '../../styles/Layouts';
-import IncomeItem from '../IncomeItem/IncomeItem';
+import TransactionItem from '../TransactionItem/TransactionItem';
 import { useGlobalContext } from '../context/globalContext';
 import ExpenseForm from './ExpenseForm';
 
 function Expenses() {
-    const {addIncome, expenses, getExpenses, deleteExpense, totalExpenses} = useGlobalContext()
+    const { transactions, getTransactions, deleteTransaction, totalExpenses } = useGlobalContext();
 
-    useEffect(() =>{
-        getExpenses()
-    }, [])
+    useEffect(() => {
+        getTransactions(); // This now needs to fetch all transactions
+    }, [getTransactions]); // Ensure getTransactions is stable and included if needed
+
+    // Filter to only include expenses
+    const expenseTransactions = transactions.filter(transaction => transaction.type === 'expense');
+
     return (
         <ExpenseStyled>
             <InnerLayout>
                 <h1>Expenses</h1>
-                <h2 className="total-income">Total Expense: <span>${totalExpenses()}</span></h2>
-                <div className="income-content">
+                <h2 className="total-expense">Total Expense: <span>${totalExpenses()}</span></h2>
+                <div className="transaction-content">
                     <div className="form-container">
                         <ExpenseForm />
                     </div>
-                    <div className="incomes">
-                        {expenses.map((income) => {
-                            const {_id, title, amount, date, category, description, type} = income;
-                            console.log(income)
-                            return <IncomeItem
-                                key={_id}
-                                id={_id} 
+                    <div className="expenses">
+                        {expenseTransactions.map((expense) => {
+                            const {id, title, amount, date, category, description} = expense;
+                            return <TransactionItem
+                                key={id}
+                                id={id} 
                                 title={title} 
                                 description={description} 
                                 amount={amount} 
                                 date={date} 
-                                type={type}
                                 category={category} 
-                                indicatorColor="var(--color-green)"
-                                deleteItem={deleteExpense}
+                                indicatorColor="var(--color-red)" // Color for expenses, could be different
+                                deleteItem={() => deleteTransaction(id)}
                             />
                         })}
                     </div>
@@ -47,7 +49,7 @@ function Expenses() {
 const ExpenseStyled = styled.div`
     display: flex;
     overflow: auto;
-    .total-income{
+    .total-expense{
         display: flex;
         justify-content: center;
         align-items: center;
@@ -62,16 +64,16 @@ const ExpenseStyled = styled.div`
         span{
             font-size: 2.5rem;
             font-weight: 800;
-            color: var(--color-green);
+            color: var(--color-red); // Adjust color to fit expense theming
         }
     }
-    .income-content{
+    .transaction-content{
         display: flex;
         gap: 2rem;
-        .incomes{
+        .expenses{
             flex: 1;
         }
     }
 `;
 
-export default Expenses
+export default Expenses;

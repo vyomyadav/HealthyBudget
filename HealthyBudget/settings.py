@@ -83,9 +83,14 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
+    'http://127.0.0.1:8000',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+#CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',  # React default port = 3000
+    'http://localhost:8000',  # Django default port = 8000
+)
 
 ROOT_URLCONF = 'HealthyBudget.urls'
 
@@ -116,7 +121,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': env('DATABASE_NAME'),
         'USER': env('DATABASE_USER'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
+        #'PASSWORD': env('DATABASE_PASSWORD'),
+        'PASSWORD': 'Harry6171616#',
         'PORT': env('DATABASE_PORT'),
         'HOST': env('DATABASE_HOST')
     }

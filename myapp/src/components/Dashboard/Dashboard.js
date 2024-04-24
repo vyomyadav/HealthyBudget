@@ -7,12 +7,29 @@ import Chart from '../Chart/Chart';
 import { useGlobalContext } from '../context/globalContext';
 
 function Dashboard() {
-    const {totalExpenses,incomes, expenses, totalIncome, totalBalance, getIncomes, getExpenses } = useGlobalContext()
+    const {
+        transactions,
+        totalIncome,
+        totalExpenses,
+        totalBalance,
+        getTransactions
+    } = useGlobalContext()
 
     useEffect(() => {
-        getIncomes()
-        getExpenses()
-    }, [])
+        getTransactions(); // Fetch all transactions on component mount
+    }, [getTransactions])
+
+    // Min and Max calculations for transactions based on type
+    const minMaxAmount = (type) => {
+        const filteredTransactions = transactions.filter(t => t.type === type);
+        const amounts = filteredTransactions.map(t => parseFloat(t.amount));
+        const minAmount = Math.min(...amounts);
+        const maxAmount = Math.max(...amounts);
+        return amounts.length ? { min: minAmount, max: maxAmount } : { min: 0, max: 0 };
+    };
+
+    const { min: minIncome, max: maxIncome } = minMaxAmount('income');
+    const { min: minExpense, max: maxExpense } = minMaxAmount('expense');
 
     return (
         <DashboardStyled>
@@ -44,23 +61,15 @@ function Dashboard() {
                     </div>
                     <div className="history-con">
                         <History />
-                        <h2 className="salary-title">Min <span>Salary</span>Max</h2>
+                        <h2 className="salary-title">Min <span>Income</span> Max</h2>
                         <div className="salary-item">
-                            <p>
-                                ${Math.min(...incomes.map(item => item.amount))}
-                            </p>
-                            <p>
-                                ${Math.max(...incomes.map(item => item.amount))}
-                            </p>
+                            <p>${minIncome}</p>
+                            <p>${maxIncome}</p>
                         </div>
-                        <h2 className="salary-title">Min <span>Expense</span>Max</h2>
+                        <h2 className="salary-title">Min <span>Expense</span> Max</h2>
                         <div className="salary-item">
-                            <p>
-                                ${Math.min(...expenses.map(item => item.amount))}
-                            </p>
-                            <p>
-                                ${Math.max(...expenses.map(item => item.amount))}
-                            </p>
+                            <p>${minExpense}</p>
+                            <p>${maxExpense}</p>
                         </div>
                     </div>
                 </div>

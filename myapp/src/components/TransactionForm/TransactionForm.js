@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
-import DatePicker from 'react-datepicker';
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import styled from 'styled-components';
-import { plus } from '../../utils/Icons';
-import Button from '../Button/Button';
-import { useGlobalContext } from '../context/globalContext';
+import styled from "styled-components";
+import { plus } from "../../utils/Icons";
+import Button from "../Button/Button";
+import { useGlobalContext } from "../context/globalContext";
 
-function ExpenseForm() {
-    const { addTransaction, getTransactions, error, setError } = useGlobalContext(); // Updated to use addTransaction
+function TransactionForm({ type }) {  // Renamed from Form to TransactionForm
+    const { addTransaction, getTransactions } = useGlobalContext();
     const [inputState, setInputState] = useState({
         title: '',
         amount: '',
-        date: new Date(), // Set default to new Date()
+        date: new Date(),
         category: '',
         description: '',
-        type: 'expense' // Explicitly setting the transaction type
+        type: type  // Set initial transaction type based on prop
     });
 
     const { title, amount, date, category, description } = inputState;
@@ -22,41 +22,38 @@ function ExpenseForm() {
     const handleInput = name => e => {
         const value = e.target ? e.target.value : e;
         setInputState({...inputState, [name]: value});
-        setError('');
-    }
+    };
 
     const handleSubmit = e => {
         e.preventDefault();
-        addTransaction(inputState); // Using the unified addTransaction method
-        getTransactions(); // Update the list after adding
-        setInputState({ // Reset form fields
+        addTransaction(inputState);
+        getTransactions();
+        setInputState({
             title: '',
             amount: '',
             date: new Date(),
             category: '',
             description: '',
-            type: 'expense' // Reset type to ensure it's always set to expense
+            type: type
         });
-    }
+    };
 
     return (
-        <ExpenseFormStyled onSubmit={handleSubmit}>
-            {error && <p className='error'>{error}</p>}
-            <div className="input-control">
+        <FormStyled onSubmit={handleSubmit}>
+            <div className="input-control"> 
                 <input 
                     type="text" 
                     value={title}
-                    name={'title'} 
-                    placeholder="Expense Title"
+                    name={'title'}
+                    placeholder={`${type.charAt(0).toUpperCase() + type.slice(1)} Title`}  // Dynamic placeholder based on type
                     onChange={handleInput('title')}
                 />
             </div>
             <div className="input-control">
-                <input 
-                    type="number" // Changing to type number for better validation
-                    value={amount}
+                <input value={amount}  
+                    type="number"  // Use 'number' type for better validation
                     name={'amount'} 
-                    placeholder={'Expense Amount'}
+                    placeholder={`${type.charAt(0).toUpperCase() + type.slice(1)} Amount`}  // Dynamic placeholder
                     onChange={handleInput('amount')} 
                 />
             </div>
@@ -66,38 +63,29 @@ function ExpenseForm() {
                     placeholderText='Enter A Date'
                     selected={date}
                     dateFormat="MM/dd/yyyy"
-                    onChange={(newDate) => {
-                        setInputState({...inputState, date: newDate})
-                    }}
+                    onChange={handleInput('date')}
                 />
             </div>
             <div className="selects input-control">
                 <select required value={category} name="category" id="category" onChange={handleInput('category')}>
-                    <option value="" disabled>Select Option</option>
-                    <option value="education">Education</option>
-                    <option value="groceries">Groceries</option>
-                    <option value="health">Health</option>
-                    <option value="subscriptions">Subscriptions</option>
-                    <option value="takeaways">Takeaways</option>
-                    <option value="clothing">Clothing</option>  
-                    <option value="travelling">Travelling</option>  
+                    <option value="" disabled >Select Category</option>
+                    {/* Add or adjust categories as needed */}
+                    <option value="salary">Salary</option>
+                    <option value="freelancing">Freelancing</option>
+                    <option value="investments">Investments</option>
+                    <option value="stocks">Stocks</option>
+                    <option value="bitcoin">Bitcoin</option>
+                    <option value="bank">Bank Transfer</option>  
+                    <option value="youtube">Youtube</option>  
                     <option value="other">Other</option>  
                 </select>
             </div>
             <div className="input-control">
-                <textarea 
-                    name="description" 
-                    value={description} 
-                    placeholder='Add A Reference' 
-                    id="description" 
-                    cols="30" 
-                    rows="4" 
-                    onChange={handleInput('description')}
-                ></textarea>
+                <textarea name="description" value={description} placeholder='Add A Description' id="description" cols="30" rows="4" onChange={handleInput('description')}></textarea>
             </div>
             <div className="submit-btn">
                 <Button 
-                    name={'Add Expense'}
+                    name={`Add ${type.charAt(0).toUpperCase() + type.slice(1)}`}
                     icon={plus}
                     bPad={'.8rem 1.6rem'}
                     bRad={'30px'}
@@ -105,11 +93,11 @@ function ExpenseForm() {
                     color={'#fff'}
                 />
             </div>
-        </ExpenseFormStyled>
+        </FormStyled>
     )
 }
 
-const ExpenseFormStyled = styled.form`
+const FormStyled = styled.form`
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -137,7 +125,7 @@ const ExpenseFormStyled = styled.form`
 
     .selects{
         display: flex;
-        justify-content: flex ;
+        justify-content: flex;
         select{
             color: rgba(34, 34, 96, 0.4);
             &:focus, &:active{
@@ -155,4 +143,5 @@ const ExpenseFormStyled = styled.form`
         }
     }
 `;
-export default ExpenseForm
+
+export default TransactionForm;

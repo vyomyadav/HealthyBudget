@@ -1,16 +1,25 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { InnerLayout } from "../../styles/Layouts";
-import Form from "../Form/Form";
-import IncomeItem from "../IncomeItem/IncomeItem";
+import TransactionForm from "../TransactionForm/TransactionForm"; // Assuming you've renamed Form to TransactionForm
+import TransactionItem from "../TransactionItem/TransactionItem";
 import { useGlobalContext } from "../context/globalContext";
 
 function Incomes() {
-    const {addIncome, incomes, getIncomes, deleteIncome, totalIncome} = useGlobalContext();
+    const {
+        transactions, 
+        getTransactions, 
+        deleteTransaction, 
+        totalIncome
+    } = useGlobalContext();
 
     useEffect(() => {
-        getIncomes();
-    }, [])
+        getTransactions(); // This fetches all transactions
+    }, [getTransactions]);
+
+    // Filter for income type transactions
+    const incomeTransactions = transactions.filter(transaction => transaction.type === 'income');
+
     return (
         <IncomeStyled>
             <InnerLayout>
@@ -18,27 +27,25 @@ function Incomes() {
                 <h2 className="total-income">Total Income: <span>${totalIncome()}</span></h2>
                 <div className="income-content">
                     <div className="form-container">
-                        <Form />
+                        <TransactionForm type="income" />
                     </div>
                     <div className="incomes">
-                        {incomes.map((income) => {
-                            const {_id, title, amount, date, category, description, type} = income;
-                            return <IncomeItem 
-                                key={_id}
-                                id={_id} 
+                        {incomeTransactions.map((transaction) => {
+                            const {id, title, amount, date, category, description} = transaction;
+                            return <TransactionItem
+                                key={id}
+                                id={id} 
                                 title={title} 
                                 description={description} 
                                 amount={amount} 
                                 date={date} 
-                                type={type}
                                 category={category} 
                                 indicatorColor="var(--color-green)"
-                                deleteItem={deleteIncome}
+                                deleteItem={() => deleteTransaction(id)}
                             />
                         })}
                     </div>
                 </div>
-
             </InnerLayout>
         </IncomeStyled>
     )
