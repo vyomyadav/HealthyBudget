@@ -14,6 +14,7 @@ pymysql.version_info = (1, 4, 6, 'final', 0)
 pymysql.install_as_MySQLdb()
 from pathlib import Path
 from . info import *
+import os
 
 import environ
 # Initialise environment variables
@@ -47,6 +48,7 @@ CORS_ALLOW_CREDENTIALS = True
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -57,6 +59,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'myapi',
+    'shortuuid',
+    'sweetify',
 ]
 
 MIDDLEWARE = [
@@ -79,12 +83,14 @@ CORS_ALLOWED_ORIGINS = [
 
 CSRF_TRUSTED_ORIGINS = [ 'http://localhost', 'http://127.0.0.1' ]
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1'
+]
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
-    'http://127.0.0.1:8000',
-]
+    
 
 #CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST = (
@@ -97,7 +103,7 @@ ROOT_URLCONF = 'HealthyBudget.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["templates"],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -156,7 +162,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTH_USER_MODEL = 'HealthyBudget.User'
+AUTH_USER_MODEL = 'myapi.User'
 
 
 # Internationalization
@@ -174,7 +180,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_FILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from myapi.models import Profile
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model, login, logout
@@ -8,6 +9,10 @@ from rest_framework.response import Response
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
 from rest_framework import permissions, status
 from .validations import custom_validation, validate_email, validate_password
+from django.contrib.auth.decorators import login_required
+from myapi.forms import UserUpdateForm, ProfileUpdateForm
+from django.contrib import messages
+import sweetify
 
 
 # @api_view(['GET'])
@@ -57,3 +62,32 @@ class UserView(APIView):
 	def get(self, request):
 		serializer = UserSerializer(request.user)
 		return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+	
+	
+	
+@login_required
+def profile(request):
+	profile = Profile.objects.get(user=request.user)
+
+	if request.method == "POST":
+		u_form = UserUpdateForm(request.POST, instance=request.user)
+		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+
+		if u_form.is_valid() and p_form.is_valid():
+			u_form.save()
+			p_form.save()
+
+			sweetify.success(request, 'Profile updated successfully')
+			messages.success(request, "Profile updated successfully")
+			return redirect("/api/profile")
+
+	else:
+		u_form = UserUpdateForm(instance=request.user)
+		p_form = ProfileUpdateForm(instance=request.user.profile)
+
+	context = {
+		"profile": profile,
+		"u_form": u_form,
+		"p_form": p_form
+	    }
+	return render(request, "/Users/macbook/Documents/GitHub/HealthyBudget/templates/profile.html", context)
