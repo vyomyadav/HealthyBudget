@@ -26,7 +26,7 @@ function Expenses() {
                     </div>
                     <div className="expenses">
                         {expenseTransactions.map((expense) => {
-                            const {id, title, amount, date, category, description} = expense;
+                            const {id, title, amount, date, category, description, type} = expense;
                             return <TransactionItem
                                 key={id}
                                 id={id} 
@@ -37,6 +37,7 @@ function Expenses() {
                                 category={category} 
                                 indicatorColor="var(--color-red)" // Color for expenses, could be different
                                 deleteItem={() => deleteTransaction(id)}
+                                type={expense.type}
                             />
                         })}
                     </div>
