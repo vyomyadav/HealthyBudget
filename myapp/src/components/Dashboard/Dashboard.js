@@ -17,7 +17,7 @@ function Dashboard() {
 
     useEffect(() => {
         getTransactions(); // Fetch all transactions on component mount
-    }, [getTransactions])
+    }, [])
 
     // Min and Max calculations for transactions based on type
     const minMaxAmount = (type) => {

@@ -15,7 +15,7 @@ function Incomes() {
 
     useEffect(() => {
         getTransactions(); // This fetches all transactions
-    }, [getTransactions]);
+    }, []);
 
     // Filter for income type transactions
     const incomeTransactions = transactions.filter(transaction => transaction.type === 'income');

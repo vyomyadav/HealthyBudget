@@ -10,7 +10,7 @@ function Expenses() {
 
     useEffect(() => {
         getTransactions(); // This now needs to fetch all transactions
-    }, [getTransactions]); // Ensure getTransactions is stable and included if needed
+    }, []); // Ensure getTransactions is stable and included if needed
 
     // Filter to only include expenses
     const expenseTransactions = transactions.filter(transaction => transaction.type === 'expense');
