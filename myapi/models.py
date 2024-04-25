@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.db.models.signals import post_save
 from shortuuid.django_fields import ShortUUIDField
+from HealthyBudget.models import User
 
 
 # Create your models here.
@@ -18,6 +19,7 @@ def user_directory_path(instance, filename):
     filename = "%s.%s" % (instance.user.id, filename)
     return "user_(0)/(1)".format(instance.user.id, filename)
 
+"""
 class User(AbstractUser):
     first_name = models.CharField(max_length=500, null=True, blank=True)
     last_name = models.CharField(max_length=500, null=True, blank=True)
@@ -32,8 +34,7 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
-
-
+"""
 class Profile(models.Model):
     pid = ShortUUIDField(length=7, max_length=25, alphabet="abcdefghijklmnopqrstuvwxyz123")
     user = models.OneToOneField(User, on_delete=models.CASCADE)

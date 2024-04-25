@@ -4,7 +4,7 @@ from myapi.models import User, Profile
 # Register your models here.
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'email']
+    list_display = ['email', 'email']
 
 class ProfileAdmin(admin.ModelAdmin):
     list_editable = ['first_name','last_name', 'verified']

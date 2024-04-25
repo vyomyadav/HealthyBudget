@@ -2,12 +2,13 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.forms import FileInput
 
-from myapi.models import User, Profile
+from HealthyBudget.models import User
+from myapi.models import Profile
 
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = User 
-        fields = ['email', 'phone']
+        fields = ['email', 'phone_number']
 
 class ProfileUpdateForm(forms.ModelForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'bg-light form-control', 'placeholder': 'Emma'}))
