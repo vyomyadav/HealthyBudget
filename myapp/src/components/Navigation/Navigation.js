@@ -1,9 +1,9 @@
+import axios from "axios";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { signout } from "../../utils/Icons";
 import { menuItems } from "../../utils/menuItems";
-import { useNavigate } from "react-router-dom";
-import axios from "axios"
 
 
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -29,12 +29,17 @@ function Navigation({ active, setActive }) {
         })
     }
 
+    function navigateToProfile() {
+        window.location.href = 'http://127.0.0.1:8000/api/profile'; // Make sure the URL is correct
+    }
+    
+
     return (
         <NavStyled>
             <div className="user-con">
                 <img src="/temp_profile_photo.jpeg" alt="" />
                 <div className="text">
-                    <h2>Test User</h2>
+                    <h2 onClick={navigateToProfile} style={{cursor: 'pointer'}}>Test User</h2>
                     <p>Healthy Budget</p>
                 </div>
             </div>
