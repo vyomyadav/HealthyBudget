@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Dashboard from '../../components/Dashboard/Dashboard';
+import TransactionPage from '../transaction';
 import Expenses from '../../components/Expenses/Expenses';
 import Incomes from '../../components/Incomes/Incomes';
 import Navigation from '../../components/Navigation/Navigation';
@@ -24,7 +25,7 @@ function Homepage() {
       case 1:
         return <Dashboard /> 
       case 2:
-        return <Dashboard />
+        return <TransactionPage />
       case 3:
         return <Incomes />
       case 4:
