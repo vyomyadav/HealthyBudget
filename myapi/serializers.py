@@ -9,7 +9,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 		model = UserModel
 		fields = '__all__'
 	def create(self, clean_data):
-		user_obj = UserModel.objects.create_user(email=clean_data['email'], password=clean_data['password'])
+		user_obj = UserModel.objects.create_user(email=clean_data['email'], password=clean_data['password'], first_name=clean_data['first_name'], last_name=clean_data['last_name'])
 		user_obj.username = clean_data['username']
 		user_obj.save()
 		return user_obj
