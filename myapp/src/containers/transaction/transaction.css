@@ -33,3 +33,7 @@
   border-color: #86cb7d;
   color: var(--fc-button-text-color);
 }
+
+.fc-h-event .fc-event-title {
+  text-wrap: pretty;
+} 
