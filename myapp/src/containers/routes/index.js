@@ -4,9 +4,9 @@ import Login from "../login"
 import Homepage from "../homepage/index"
 import Register from "../register"
 
-const express = require("express");
+// const express = require("express");
 // const mysql = require("mysql");
-const cors = require("cors");
+// const cors = require("cors");
 
 
 
