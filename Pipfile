@@ -14,6 +14,10 @@ sqlparse = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 cryptography = "*"
+django-jazzmin = "*"
+shortuuid = "*"
+sweetify = "*"
+python-dateutil = "*"
 
 [dev-packages]
 
