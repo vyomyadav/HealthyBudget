@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Helmet } from 'react-helmet';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { GlobalProvider } from './components/context/globalContext';
@@ -9,6 +10,9 @@ import { GlobalStyle } from './styles/GlobalStyle';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <Helmet>
+      <title>Healthy Budget</title>
+    </Helmet>
     <GlobalStyle />
     <BrowserRouter >
       <GlobalProvider>
