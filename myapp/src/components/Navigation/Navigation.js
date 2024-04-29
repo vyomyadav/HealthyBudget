@@ -47,19 +47,13 @@ function Navigation({ active, setActive }) {
         })
     }
 
-    function navigateToProfile() {
-        window.location.href = 'http://127.0.0.1:8000/api/profile'; // Make sure the URL is correct
-    }
-
-    console.log(user)
-    
 
     return (
         <NavStyled>
             <div className="user-con">
                 <img src={user.profile_photo ? user.profile_photo : "/temp_profile_photo.jpeg" } alt="" />
                 <div className="text">
-                    <h2 onClick={navigateToProfile} style={{cursor: 'pointer'}}>{user.first_name} {user.last_name}</h2>
+                    <h2 onClick={() => setActive(6)} style={{cursor: 'pointer'}}>{user.first_name} {user.last_name}</h2>
                     <p>Healthy Budget</p>
                 </div>
             </div>
