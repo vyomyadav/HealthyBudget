@@ -1,5 +1,5 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { signout } from "../../utils/Icons";
@@ -17,6 +17,17 @@ const client = axios.create({
 
 function Navigation({ active, setActive }) {
 
+    const [user, setUser] = useState({});
+
+    useEffect(() => {
+            client.get(
+                '/api/user'
+            ).then(function (res) {
+                console.log(res.data.user)
+                setUser(res.data.user)
+            })
+      }, [])
+
 
     const navigate = useNavigate();
 
@@ -32,14 +43,16 @@ function Navigation({ active, setActive }) {
     function navigateToProfile() {
         window.location.href = 'http://127.0.0.1:8000/api/profile'; // Make sure the URL is correct
     }
+
+    console.log(user)
     
 
     return (
         <NavStyled>
             <div className="user-con">
-                <img src="/temp_profile_photo.jpeg" alt="" />
+                <img src={user.profile_photo ? user.profile_photo : "/temp_profile_photo.jpeg" } alt="" />
                 <div className="text">
-                    <h2 onClick={navigateToProfile} style={{cursor: 'pointer'}}>Test User</h2>
+                    <h2 onClick={navigateToProfile} style={{cursor: 'pointer'}}>{user.first_name} {user.last_name}</h2>
                     <p>Healthy Budget</p>
                 </div>
             </div>

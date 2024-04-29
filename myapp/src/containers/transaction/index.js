@@ -10,9 +10,6 @@ function TransactionPage() {
 
   const {
       transactions,
-      totalIncome,
-      totalExpenses,
-      totalBalance,
       getTransactions
   } = useGlobalContext()
 
@@ -37,11 +34,6 @@ function TransactionPage() {
         }});
       setTransformedArray(transformedData);
     }, [transactions])
-
-
-    console.log(transformedArray)
-
-
   return (
     <div>
       <Fullcalendar

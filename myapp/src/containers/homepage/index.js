@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, {useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Dashboard from '../../components/Dashboard/Dashboard';
 import TransactionPage from '../transaction';

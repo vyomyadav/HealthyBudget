@@ -9,7 +9,7 @@ function History() {
 
     return (
         <HistoryStyled>
-            <h2>Recent History</h2>
+            <div className=' text-3xl font-bold text-black'>Recent History</div>
             {history.map((item) =>{
                 const {_id, title, amount, type} = item
                 return (
@@ -24,7 +24,7 @@ function History() {
                             color: type === 'expense' ? 'red' : 'var(--color-green)'
                         }}>
                             {
-                                type === 'expense' ? `-${amount <= 0 ? 0 : amount}` : `+${amount <= 0 ? 0: amount}`
+                                type === 'expense' ? `-$${amount <= 0 ? 0 : (amount.endsWith('.00') ? amount.slice(0, -3):  amount)}` : `+$${amount <= 0 ? 0: (amount.endsWith('.00') ? amount.slice(0, -3):  amount)}`
                             }
                         </p>
                     </div>
