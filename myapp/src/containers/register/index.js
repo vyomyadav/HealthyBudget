@@ -1,12 +1,9 @@
 import React from 'react'
-import { jwtDecode } from 'jwt-decode';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Logo from "../../../public/logo.png"
 import axios from "axios"
 import { Link, useNavigate } from 'react-router-dom';
 import Validation from './registerValidation';
-import Camel from "../../../public/avatars/camel.png"
-import Cow from "../../../public/avatars/cow.png"
 import AvatarSelectionModel from '../../components/AvatarSelection';
 
 axios.defaults.xsrfCookieName = "csrftoken";
@@ -21,11 +18,11 @@ function Register() {
   const [formValues, setFormValues] = useState({
     first_name: '',
     last_name: '',
-    username: '',
+    phone_number: '',
     email: '',
     password: '',
     confirmPassword: '',
-    profile_photo: '',
+    profile_photo: '../../../public/avatars/default.jpeg',
   });
 
   const [errors, setErrors] = useState({})
@@ -81,9 +78,8 @@ function Register() {
                     className="h-44"
                   />
                 </div>
-                <div className="banner">Register for Healthy Budget</div>
                 <div className="divide-y divide-gray-200">
-                  <div className="pt-10 py-10 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+                  <div className=" pt-1 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                     <AvatarSelectionModel  onSelect={handleProfilePhotoSelect}/>
                     <div className="relative">
                       <input
@@ -91,7 +87,7 @@ function Register() {
                         name="first_name"
                         type="text"
                         className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                        placeholder="Username"
+                        placeholder="First name"
                         value={formValues.first_name}
                         onChange={handleInput}
                       />
@@ -111,7 +107,7 @@ function Register() {
                         name="last_name"
                         type="text"
                         className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                        placeholder="Username"
+                        placeholder="Last Name"
                         value={formValues.last_name}
                         onChange={handleInput}
                       />
@@ -127,19 +123,19 @@ function Register() {
                     </div>
                     <div className="relative">
                       <input
-                        id="username"
-                        name="username"
+                        id="phone_number"
+                        name="phone_number"
                         type="text"
                         className="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                        placeholder="Username"
-                        value={formValues.username}
+                        placeholder="Contact Number"
+                        value={formValues.phone_number}
                         onChange={handleInput}
                       />
                       <label
-                        htmlFor="username"
+                        htmlFor="phone_number"
                         className="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm"
                       >
-                        Username
+                        Phone Number
                       </label>
                       {/* {errors.username && (
                       <span className="text-danger"> {errors.email}</span>
@@ -210,7 +206,7 @@ function Register() {
                         Register
                       </button>
                     </div>
-                    <div className="-m-2 pt-1 flex flex-col justify-center">
+                    <div className="flex flex-col justify-center">
                       <div className="flex justify-center mt-4 text-xs sm:text-sm">
                         <p className="">
                           Already have an account ?{' '}
