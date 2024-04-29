@@ -1,12 +1,18 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from .models import Transaction, Budget
+from .models import Transaction, Budget, User
 from django.views.decorators.http import require_http_methods
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 import json
 from dateutil import parser
 from decimal import Decimal, InvalidOperation
 import logging
+
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+
+from myapi.serializers import UserSerializer
 
 logger = logging.getLogger(__name__)
 
@@ -140,3 +146,4 @@ def delete_budget(request, id):
     except Exception as e:
         logger.exception("Error deleting budget")
         return JsonResponse({'message': 'Server Error'}, status=500)
+

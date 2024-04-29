@@ -10,7 +10,8 @@ from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerial
 from rest_framework import permissions, status
 from .validations import custom_validation, validate_email, validate_password
 from django.contrib.auth.decorators import login_required
-from myapi.forms import UserUpdateForm, ProfileUpdateForm
+from django.views.decorators.csrf import csrf_exempt
+
 from django.contrib import messages
 import sweetify
 
@@ -47,6 +48,7 @@ class UserLogin(APIView):
 			return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+@csrf_exempt
 class UserLogout(APIView):
 	permission_classes = (permissions.AllowAny,)
 	authentication_classes = ()
@@ -63,31 +65,46 @@ class UserView(APIView):
 		serializer = UserSerializer(request.user)
 		return Response({'user': serializer.data}, status=status.HTTP_200_OK)
 	
+class UpdateUserProfile(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    authentication_classes = (SessionAuthentication,)
+
+    def post(self, request):
+        # Get the user's profile instance
+        profile_instance = Profile.objects.get(user=request.user)
+        # Deserialize the request data
+        serializer = UserSerializer(instance=profile_instance, data=request.data)
+        # Validate and save the data
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        else:
+            return Response(serializer.errors, status=400)
+    
 	
-	
-@login_required
-def profile(request):
-	profile = Profile.objects.get(user=request.user)
+# @login_required
+# def profile(request):
+# 	profile = Profile.objects.get(user=request.user)
 
-	if request.method == "POST":
-		u_form = UserUpdateForm(request.POST, instance=request.user)
-		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+# 	if request.method == "POST":
+# 		u_form = UserUpdateForm(request.POST, instance=request.user)
+# 		p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
 
-		if u_form.is_valid() and p_form.is_valid():
-			u_form.save()
-			p_form.save()
+# 		if u_form.is_valid() and p_form.is_valid():
+# 			u_form.save()
+# 			p_form.save()
 
-			sweetify.success(request, 'Profile updated successfully')
-			messages.success(request, "Profile updated successfully")
-			return redirect("/api/profile")
+# 			sweetify.success(request, 'Profile updated successfully')
+# 			messages.success(request, "Profile updated successfully")
+# 			return redirect("/api/profile")
 
-	else:
-		u_form = UserUpdateForm(instance=request.user)
-		p_form = ProfileUpdateForm(instance=request.user.profile)
+# 	else:
+# 		u_form = UserUpdateForm(instance=request.user)
+# 		p_form = ProfileUpdateForm(instance=request.user.profile)
 
-	context = {
-		"profile": profile,
-		"u_form": u_form,
-		"p_form": p_form
-	    }
-	return render(request, "/Users/macbook/Documents/GitHub/HealthyBudget/templates/profile.html", context)
+# 	context = {
+# 		"profile": profile,
+# 		"u_form": u_form,
+# 		"p_form": p_form
+# 	    }
+# 	return render(request, "/Users/macbook/Documents/GitHub/HealthyBudget/templates/profile.html", context)

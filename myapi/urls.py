@@ -12,7 +12,8 @@ urlpatterns = [
 	path('login', views.UserLogin.as_view(), name='login'),
 	path('logout', views.UserLogout.as_view(), name='logout'),
 	path('user', views.UserView.as_view(), name='user'),
-    path('profile', views.profile, name='profile'),
+    path('api/user', views.UpdateUserProfile.as_view(), name='profile-update'),
+    
 ]  
 
 urlpatterns += staticfiles_urlpatterns()
