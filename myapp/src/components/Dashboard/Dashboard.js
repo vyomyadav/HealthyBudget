@@ -4,8 +4,8 @@ import History from '../../History/History';
 import { InnerLayout } from '../../styles/Layouts';
 import { dollar } from '../../utils/Icons';
 import Chart from '../Chart/Chart';
-import { useGlobalContext } from '../context/globalContext';
 import ApexChart from '../RadialChart';
+import { useGlobalContext } from '../context/globalContext';
 
 function Dashboard() {
     const {
@@ -13,11 +13,13 @@ function Dashboard() {
         totalIncome,
         totalExpenses,
         totalBalance,
-        getTransactions
+        getTransactions,
+        getBudgets,
     } = useGlobalContext()
 
     useEffect(() => {
         getTransactions(); // Fetch all transactions on component mount
+        getBudgets(); // Fetch all budgets on component mount
     }, [])
 
     // Min and Max calculations for transactions based on type

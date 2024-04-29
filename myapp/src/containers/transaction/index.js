@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import Fullcalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import listPlugin from "@fullcalendar/list";
 import interactionPlugin from "@fullcalendar/interaction";
+import listPlugin from "@fullcalendar/list";
+import Fullcalendar from "@fullcalendar/react";
+import React, { useEffect, useState } from 'react';
 import { useGlobalContext } from '../../components/context/globalContext';
 import './transaction.css';
 
@@ -10,7 +10,7 @@ function TransactionPage() {
 
   const {
       transactions,
-      getTransactions
+      getTransactions,
   } = useGlobalContext()
 
   const [transformedArray, setTransformedArray] = useState([]);
@@ -20,20 +20,31 @@ function TransactionPage() {
     getTransactions(); // Fetch all transactions on component mount
   }, [])
 
-    useEffect(() => {
-      const transformedData = transactions.map(transaction => {
-        let amount = transaction.amount;
-        // Check if amount has .00 and remove it if it does
-        if (amount.endsWith('.00')) {
-          amount = amount.slice(0, -3);
-        }
-        return {
-          title: `${transaction.title} - $${amount}`,
-          date: transaction.date,
-          // allDay: true
-        }});
-      setTransformedArray(transformedData);
-    }, [transactions])
+  
+  useEffect(() => {
+    const transformedData = transactions.map(transaction => {
+      let amount = transaction.amount;
+      if (amount.endsWith('.00')) {
+        amount = amount.slice(0, -3);
+      }
+  
+      // Assign a color based on the transaction type
+      const color = transaction.type === 'income' ? 'green' : 'red';
+      const backgroundColor = transaction.type === 'budget' ? 'red' : color; // Assume 'budget' is a possible type
+  
+      return {
+        title: `${transaction.title} - $${amount}`,
+        date: transaction.date,
+        backgroundColor, // Set the background color based on the transaction type
+        borderColor: backgroundColor, // Optionally, you can also set the border color
+        // allDay: true if you want to mark the event as an all-day event
+      };
+    });
+    setTransformedArray(transformedData);
+  }, [transactions]);
+
+
+
   return (
     <div>
       <Fullcalendar
