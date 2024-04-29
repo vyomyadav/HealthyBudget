@@ -29,6 +29,9 @@ urlpatterns = [
     path('budget/transactions/add/', views.add_transaction, name='add_transaction'),
     path('budget/transactions/', views.get_transactions, name='get_transactions'),
     path('budget/transactions/delete/<int:id>/', views.delete_transaction, name='delete_transaction'),
+    path('budget/budgets/add/', views.add_budget, name='add_budget'),
+    path('budget/budgets/', views.get_budgets, name='get_budgets'),
+    path('budget/budgets/delete/<int:id>/', views.delete_budget, name='delete_budget'),
 ]
 
 if settings.DEBUG:
