@@ -13,6 +13,45 @@ const client = axios.create({
   baseURL: "http://localhost:8000",
 })
 
+const ProfilePhotoSelector = () => {
+  const [selectedProfilePhoto, setSelectedProfilePhoto] = useState('');
+
+  const profilePhotos = [
+    "../../../public/avatars/camel.png",
+    "../../../public/avatars/cow.png",
+    "../../../public/avatars/dragon.png",
+    "../../../public/avatars/fox.png",
+    "../../../public/avatars/jellyfish.png",
+    "../../../public/avatars/koala.png",
+    "../../../public/avatars/octopus.png",
+    "../../../public/avatars/penguin.png",
+    "../../../public/avatars/rudolf.png",
+    "../../../public/avatars/sheep.png",
+  ];
+
+  const handleProfilePhotoSelect = (photoPath) => {
+    setSelectedProfilePhoto(photoPath);
+  };
+
+  return (
+    <div>
+      <h3>Select your profile photo</h3>
+      <div className="profile-photo-grid">
+        {profilePhotos.map((photo, index) => (
+          <div
+            key={index}
+            className={`profile-photo-item ${selectedProfilePhoto === photo ? 'selected' : ''}`}
+            onClick={() => handleProfilePhotoSelect(photo)}
+          >
+            <img src={photo} alt={`Profile Photo ${index}`} />
+          </div>
+        ))}
+      </div>
+      <input type="hidden" name="profile_photo" value={selectedProfilePhoto} />
+    </div>
+  );
+};
+
 function Register() {
   const [formValues, setFormValues] = useState({
     first_name: '',
@@ -21,7 +60,8 @@ function Register() {
     email: '',
     password: '',
     confirmPassword: '',
-  })
+    profile_photo: '',
+  });
   const [errors, setErrors] = useState({})
   const navigate = useNavigate();
 
@@ -32,7 +72,6 @@ function Register() {
     }));
   };
 
-  
   const handleSubmit = (event) => {
     event.preventDefault();
     const { password: enteredPassword, confirmPassword } = formValues;
@@ -53,22 +92,6 @@ function Register() {
       })
       .catch(err => console.log(err));
   };
-    
-    // const { email, password } = formValues;
-    // client
-    //   .post(
-    //   '/api/register',
-    //   {
-    //     email,
-    //     password,
-    //   }
-    // ).then(() => {
-    //   console.log("Registered");
-    //   navigate('/login');
-    // })
-    //   .catch((error) => {
-    //   console.log(error);
-    // });
 
   return (
     <div className="register-container" style={{ height: '100vh', overflowY: 'scroll' }}>
@@ -237,3 +260,4 @@ function Register() {
 }
 export default Register;
 
+// <a href="https://www.flaticon.com/free-icons/animals" title="animals icons">Animals icons created by Freepik - Flaticon</a>
