@@ -1,4 +1,4 @@
-import React, {useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Budgets from '../../components/Budgets/budget';
 import Dashboard from '../../components/Dashboard/Dashboard';
@@ -24,7 +24,7 @@ function Homepage() {
   const displayData = () => {
     switch(active) {
       case 1:
-        return <Dashboard /> 
+        return <Dashboard setActive={setActive}/> 
       case 2:
         return <TransactionPage />
       case 3:
@@ -34,7 +34,7 @@ function Homepage() {
       case 5:
         return <Budgets />  
       default: 
-        return <Dashboard />
+        return <Dashboard setActive={setActive}/>
     }
   }
 

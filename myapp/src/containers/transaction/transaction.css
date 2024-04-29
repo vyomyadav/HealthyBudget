@@ -37,3 +37,8 @@
 .fc-h-event .fc-event-title {
   text-wrap: pretty;
 } 
+
+.day-over-budget {
+  background-color: #ffcccc !important; /* Light red color for over budget */
+  border-color: red !important;
+}
