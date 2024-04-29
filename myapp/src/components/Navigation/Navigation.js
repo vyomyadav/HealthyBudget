@@ -14,7 +14,6 @@ const client = axios.create({
 })
 
 
-
 function Navigation({ active, setActive }) {
 
     const [user, setUser] = useState({});
@@ -25,7 +24,15 @@ function Navigation({ active, setActive }) {
             ).then(function (res) {
                 console.log(res.data.user)
                 setUser(res.data.user)
-            })
+            }).catch(function (error) {
+                if (error.response && error.response.status === 403) {
+                  // Redirect to login page if 403 error
+                  navigate('/login');
+                } else {
+                  // Handle other errors
+                  console.error("Error:", error);
+                }
+            });
       }, [])
 
 
