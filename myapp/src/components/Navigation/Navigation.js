@@ -4,17 +4,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { signout } from "../../utils/Icons";
 import { menuItems } from "../../utils/menuItems";
-import Camel from "../../../public/avatars/camel.png";
-import Cow from "../../../public/avatars/cow.png";
-import Dragon from "../../../public/avatars/dragon.png";
-import Fox from "../../../public/avatars/fox.png";
-import Jelly from "../../../public/avatars/jellyfish.png";
-import Koala from "../../../public/avatars/koala.png";
-import Octopus from "../../../public/avatars/octopus.png";
-import Penguin from "../../../public/avatars/penguin.png";
-import Rudolf from "../../../public/avatars/rudolf.png";
-import Sheep from "../../../public/avatars/sheep.png";
-import DefaultProfileImage from "../../../public/avatars/default.jpeg"
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -22,20 +11,6 @@ axios.defaults.withCredentials = true;
 const client = axios.create({
     baseURL: "http://localhost:8000",
 })
-
-const avatarMap = {
-    1: Camel,
-    2: Cow,
-    3: Dragon,
-    4: Fox,
-    5: Jelly,
-    6: Koala,
-    7: Octopus,
-    8: Penguin,
-    9: Rudolf,
-    10: Sheep,
-  };
-
 
 function Navigation({ active, setActive }) {
 
@@ -78,8 +53,8 @@ function Navigation({ active, setActive }) {
                 <img
                   src={
                     user.profile_photo
-                      ? user.profile_photo
-                      : avatarMap[user.profile_photo_id] || DefaultProfileImage
+                      ? user.profile_photo.slice(user.profile_photo.lastIndexOf("avatars/"))
+                      : 'avatars/default.jpeg'
                   }
                   alt=""
                 />
