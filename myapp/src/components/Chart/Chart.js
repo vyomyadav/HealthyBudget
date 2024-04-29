@@ -32,22 +32,40 @@ const ChartStyled = styled.div`
 function Chart() {
     const { transactions } = useGlobalContext();
 
-    const incomes = transactions.filter(trans => trans.type === 'income');
-    const expenses = transactions.filter(trans => trans.type === 'expense');
+    // Create an object to hold the summed amounts by date
+    let sumsByDate = {};
+
+    // Go through each transaction and sum them by date
+    transactions.forEach(trans => {
+        const date = dateFormat(trans.date);
+        if (!sumsByDate[date]) {
+            sumsByDate[date] = { income: 0, expense: 0 };
+        }
+        if (trans.type === 'income') {
+            sumsByDate[date].income += parseFloat(trans.amount);
+        } else if (trans.type === 'expense') {
+            sumsByDate[date].expense += parseFloat(trans.amount);
+        }
+    });
+
+    // Sort dates and create datasets
+    const sortedDates = Object.keys(sumsByDate).sort((a, b) => new Date(a) - new Date(b));
+    const incomesData = sortedDates.map(date => sumsByDate[date].income);
+    const expensesData = sortedDates.map(date => sumsByDate[date].expense);
 
     const data = {
-        labels: transactions.map((trans) => dateFormat(trans.date)),
+        labels: sortedDates,
         datasets: [
             {
                 label: 'Income',
-                data: incomes.map(income => income.amount),
+                data: incomesData,
                 borderColor: 'green',
                 backgroundColor: 'rgba(0, 128, 0, 0.5)',
                 tension: 0.2
             },
             {
                 label: 'Expenses',
-                data: expenses.map(expense => expense.amount),
+                data: expensesData,
                 borderColor: 'red',
                 backgroundColor: 'rgba(255, 0, 0, 0.5)',
                 tension: 0.2
