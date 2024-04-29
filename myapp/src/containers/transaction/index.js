@@ -10,7 +10,7 @@ function TransactionPage() {
 
   const {
       transactions,
-      getTransactions
+      getTransactions,
   } = useGlobalContext()
 
   const [transformedArray, setTransformedArray] = useState([]);
@@ -20,6 +20,7 @@ function TransactionPage() {
     getTransactions(); // Fetch all transactions on component mount
   }, [])
 
+  
   useEffect(() => {
     const transformedData = transactions.map(transaction => {
       let amount = transaction.amount;
@@ -29,7 +30,7 @@ function TransactionPage() {
   
       // Assign a color based on the transaction type
       const color = transaction.type === 'income' ? 'green' : 'red';
-      const backgroundColor = transaction.type === 'budget' ? 'blue' : color; // Assume 'budget' is a possible type
+      const backgroundColor = transaction.type === 'budget' ? 'red' : color; // Assume 'budget' is a possible type
   
       return {
         title: `${transaction.title} - $${amount}`,
@@ -41,7 +42,9 @@ function TransactionPage() {
     });
     setTransformedArray(transformedData);
   }, [transactions]);
-  
+
+
+
   return (
     <div>
       <Fullcalendar
