@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import History from '../../History/History';
 import { InnerLayout } from '../../styles/Layouts';
@@ -7,7 +8,8 @@ import Chart from '../Chart/Chart';
 import ApexChart from '../RadialChart';
 import { useGlobalContext } from '../context/globalContext';
 
-function Dashboard() {
+function Dashboard( {setActive} ) {
+
     const {
         transactions,
         totalIncome,
@@ -34,19 +36,27 @@ function Dashboard() {
     const { min: minIncome, max: maxIncome } = minMaxAmount('income');
     const { min: minExpense, max: maxExpense } = minMaxAmount('expense');
 
+    const navigate = useNavigate();
+
+    const handleIncomeClick = () => setActive(3); // Change to the appropriate index for Incomes
+    const handleExpenseClick = () => setActive(4);
+    const handleHistoryClick = () => setActive(2);
+    const handleBudgetClick = () => setActive(5);
+
+
     return (
         <DashboardStyled>
             <InnerLayout>
                 <div className="stats-con">
                     <div className="chart-con">
                         <div className="amount-con">
-                            <div className="income">
+                            <div className="income" onClick={handleIncomeClick}>
                                 <h2>Total Income</h2>
                                 <p>
                                     {dollar} {totalIncome()}
                                 </p>
                             </div>
-                            <div className="expense">
+                            <div className="expense" onClick={handleExpenseClick}>
                                 <h2>Total Expense</h2>
                                 <p>
                                     {dollar} {totalExpenses()}
@@ -62,14 +72,14 @@ function Dashboard() {
                     </div>
                 </div>
 
-                <div className='pt-5 text-3xl font-bold text-black'> Transactions </div>
+                <div className='pt-5 text-3xl font-bold text-black' onClick={handleHistoryClick}> Transactions </div>
 
                 <div className="stats-con">
                     <div className="chart-container mb-10">
                         <Chart />
                     </div>
                     <div className="radialGraph mb-10">
-                    <div className='pt-5 text-3xl font-bold text-black'> Daily Finance </div>
+                    <div className='pt-5 text-3xl font-bold text-black' onClick={handleBudgetClick}> Daily Finance </div>
                         <ApexChart />
                     </div>
                     <div className="history-con">
