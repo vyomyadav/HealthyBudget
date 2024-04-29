@@ -4,7 +4,17 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { signout } from "../../utils/Icons";
 import { menuItems } from "../../utils/menuItems";
-
+import Camel from "../../../public/avatars/camel.png";
+import Cow from "../../../public/avatars/cow.png";
+import Dragon from "../../../public/avatars/dragon.png";
+import Fox from "../../../public/avatars/fox.png";
+import Jelly from "../../../public/avatars/jellyfish.png";
+import Koala from "../../../public/avatars/koala.png";
+import Octopus from "../../../public/avatars/octopus.png";
+import Penguin from "../../../public/avatars/penguin.png";
+import Rudolf from "../../../public/avatars/rudolf.png";
+import Sheep from "../../../public/avatars/sheep.png";
+import DefaultProfileImage from "../../../public/avatars/default.jpeg"
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -12,6 +22,19 @@ axios.defaults.withCredentials = true;
 const client = axios.create({
     baseURL: "http://localhost:8000",
 })
+
+const avatarMap = {
+    1: Camel,
+    2: Cow,
+    3: Dragon,
+    4: Fox,
+    5: Jelly,
+    6: Koala,
+    7: Octopus,
+    8: Penguin,
+    9: Rudolf,
+    10: Sheep,
+  };
 
 
 function Navigation({ active, setActive }) {
@@ -47,38 +70,78 @@ function Navigation({ active, setActive }) {
         })
     }
 
-
     return (
         <NavStyled>
-            <div className="user-con">
-                <img src={user.profile_photo ? user.profile_photo : "/temp_profile_photo.jpeg" } alt="" />
+          <div className="user-con">
+            {user && (
+              <>
+                <img
+                  src={
+                    user.profile_photo
+                      ? user.profile_photo
+                      : avatarMap[user.profile_photo_id] || DefaultProfileImage
+                  }
+                  alt=""
+                />
                 <div className="text">
                     <h2 onClick={() => setActive(6)} style={{cursor: 'pointer'}}>{user.first_name} {user.last_name}</h2>
                     <p>Healthy Budget</p>
                 </div>
-            </div>
-            <ul className="menu-items">
-                {menuItems.map((item) => {
-                    return (
-                        <li
-                            key={item.id}
-                            onClick={() => setActive(item.id)}
-                            className={active === item.id ? 'active' : ''}
-                        >
-                            {item.icon}
-                            <span>{item.title}</span>
-                        </li>
-                    )
-                })}
-            </ul>
-            <div className="bottom-nav cursor-pointer" onClick={handleLogout}>
-                <li>
-                    {signout} Sign Out
-                </li>
-            </div>
-        </NavStyled>
-    )
+              </>
+            )}
+          </div>
+          <ul className="menu-items">           
+          {menuItems.map((item) => {
+          return (
+            <li
+              key={item.id}
+              onClick={() => setActive(item.id)}
+              className={active === item.id ? "active" : ""}
+            >
+              {item.icon}
+              <span>{item.title}</span>
+            </li>
+          );
+        })}
+      </ul>
+      <div className="bottom-nav cursor-pointer" onClick={handleLogout}>
+        <li>{signout} Sign Out</li>
+      </div>
+    </NavStyled>
+  );
 }
+
+//     return (
+//         <NavStyled>
+//             <div className="user-con">
+//                 <img src={user.profile_photo ? user.profile_photo : "/temp_profile_photo.jpeg" } alt="" />
+//                 <div className="text">
+//                     <h2 onClick={navigateToProfile} style={{cursor: 'pointer'}}>{user.first_name} {user.last_name}</h2>
+//                     <p>Healthy Budget</p>
+//                 </div>
+//             </div>
+//             <ul className="menu-items">
+//                 {menuItems.map((item) => {
+//                     return (
+//                         <li
+//                             key={item.id}
+//                             onClick={() => setActive(item.id)}
+//                             className={active === item.id ? 'active' : ''}
+//                         >
+//                             {item.icon}
+//                             <span>{item.title}</span>
+//                         </li>
+//                     )
+//                 })}
+//             </ul>
+//             <div className="bottom-nav cursor-pointer" onClick={handleLogout}>
+//                 <li>
+//                     {signout} Sign Out
+//                 </li>
+//             </div>
+//         </NavStyled>
+//     )
+// }
 
 const NavStyled = styled.nav`
     padding: 2rem 1.5rem;
