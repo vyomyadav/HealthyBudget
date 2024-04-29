@@ -96,7 +96,6 @@ const DashboardStyled = styled.div`
     .stats-con{
 
         .chart-container {
-            height: 400px;
         }
 
         .chart-con{

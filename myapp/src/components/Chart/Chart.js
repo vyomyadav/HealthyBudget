@@ -18,8 +18,7 @@ ChartJs.register(
 // Styled component for the chart container
 const ChartStyled = styled.div`
     position: relative;
-    height: 40vh;  // 40% of the viewport height
-    width: 80vw;   // 80% of the viewport width
+    height: 400px;
     background: #FCF6F9;
     border: 2px solid #FFFFFF;
     box-shadow: 0px 1px 15px rgba(0, 0, 0, 0.06);

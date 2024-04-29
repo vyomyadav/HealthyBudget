@@ -5,7 +5,9 @@ import { useGlobalContext } from '../context/globalContext';
 const ApexChart = () => {
   const {
     transactions,
-    getTransactions
+    getTransactions,
+    budgets,
+    getBudgets
   } = useGlobalContext()
 
 
@@ -15,8 +17,11 @@ const ApexChart = () => {
 
   const [totalIncomes, setTotalIncomes] = useState(0);
 
+  const [dailyBudget, setDailyBudget] = useState(0);
+
   useEffect(() => {
     getTransactions(); // Fetch all transactions on component mount
+    getBudgets();
   }, [])
 
 
@@ -42,8 +47,19 @@ const ApexChart = () => {
     setTotalIncomes(amount ? amount: 0);
   }, [transactions, currentDate]);
 
+  useEffect(() => {
+    const filtered = budgets.filter(budget =>
+      budget.date === currentDate
+    );
+    const amount = filtered.reduce((total, budget) => {
+      return total + parseFloat(budget.amount);
+    }, 0);
 
-  const series = [totalIncomes, totalExpenses, 83];
+    setDailyBudget(amount ? amount: 0);
+  }, [transactions, currentDate]);
+
+
+  const series = [totalIncomes, totalExpenses, dailyBudget];
   const options = {
     chart: {
       height: 350,
