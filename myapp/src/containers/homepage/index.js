@@ -9,6 +9,7 @@ import Orb from '../../components/Orb/Orb';
 import { useGlobalContext } from '../../components/context/globalContext';
 import { MainLayout } from '../../styles/Layouts';
 import TransactionPage from '../transaction';
+import Profile from '../../components/Profile/Profile';
 
 const backgroundUrl = '/background.png';
 
@@ -33,6 +34,8 @@ function Homepage() {
         return <Expenses />
       case 5:
         return <Budgets />  
+      case 6:
+        return <Profile/>
       default: 
         return <Dashboard />
     }
