@@ -1,13 +1,14 @@
 import React, {useMemo, useState } from 'react';
 import styled from 'styled-components';
+import Budgets from '../../components/Budgets/budget';
 import Dashboard from '../../components/Dashboard/Dashboard';
-import TransactionPage from '../transaction';
 import Expenses from '../../components/Expenses/Expenses';
 import Incomes from '../../components/Incomes/Incomes';
 import Navigation from '../../components/Navigation/Navigation';
 import Orb from '../../components/Orb/Orb';
 import { useGlobalContext } from '../../components/context/globalContext';
 import { MainLayout } from '../../styles/Layouts';
+import TransactionPage from '../transaction';
 
 const backgroundUrl = '/background.png';
 
@@ -30,6 +31,8 @@ function Homepage() {
         return <Incomes />
       case 4:
         return <Expenses />
+      case 5:
+        return <Budgets />  
       default: 
         return <Dashboard />
     }
