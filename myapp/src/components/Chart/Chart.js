@@ -1,6 +1,6 @@
-import { BarElement, CategoryScale, Chart as ChartJs, Legend, LinearScale, Title, Tooltip } from 'chart.js';
+import { ArcElement, CategoryScale, Chart as ChartJs, Legend, LineElement, LinearScale, PointElement, Title, Tooltip } from 'chart.js';
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import styled from 'styled-components';
 import { dateFormat } from '../../utils/dateFormat';
 import { useGlobalContext } from '../context/globalContext';
@@ -9,10 +9,12 @@ import { useGlobalContext } from '../context/globalContext';
 ChartJs.register(
     CategoryScale,
     LinearScale,
-    BarElement,
+    PointElement,
+    LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    ArcElement,
 );
 
 // Styled component for the chart container
@@ -26,76 +28,117 @@ const ChartStyled = styled.div`
     margin-top: 20px;
 `;
 
-// Function to sum transaction amounts by date
-const sumByDate = (items) => {
-    const sum = {};
-    items.forEach(({ date, amount }) => {
-        const key = dateFormat(new Date(date));
-        if (!sum[key]) {
-            sum[key] = 0;
-        }
-        sum[key] += +amount;
-    });
-    return sum;
-};
-
 // Chart component
 function Chart() {
-    const { transactions, budgets } = useGlobalContext();
+    const { transactions } = useGlobalContext();
 
-    const incomeByDate = sumByDate(transactions.filter(t => t.type === 'income'));
-    const expenseByDate = sumByDate(transactions.filter(t => t.type === 'expense'));
-    const budgetByDate = sumByDate(budgets);
+    // Create an object to hold the summed amounts by date
+    let sumsByDate = {};
 
-    // Sorted unique dates from all transactions
-    const allDates = [...new Set([...transactions, ...budgets].map(t => dateFormat(new Date(t.date))))];
-    allDates.sort((a, b) => new Date(a) - new Date(b));
+    // Go through each transaction and sum them by date
+    transactions.forEach(trans => {
+        const date = dateFormat(trans.date);
+        if (!sumsByDate[date]) {
+            sumsByDate[date] = { income: 0, expense: 0 };
+        }
+        if (trans.type === 'income') {
+            sumsByDate[date].income += parseFloat(trans.amount);
+        } else if (trans.type === 'expense') {
+            sumsByDate[date].expense += parseFloat(trans.amount);
+        }
+    });
+
+    // Sort dates and create datasets
+    const sortedDates = Object.keys(sumsByDate).sort((a, b) => new Date(a) - new Date(b));
+    const incomesData = sortedDates.map(date => sumsByDate[date].income);
+    const expensesData = sortedDates.map(date => sumsByDate[date].expense);
 
     const data = {
-        labels: allDates,
+        labels: sortedDates,
         datasets: [
             {
                 label: 'Income',
-                data: allDates.map(date => incomeByDate[date] || 0),
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                data: incomesData,
+                borderColor: 'green',
+                backgroundColor: 'rgba(0, 128, 0, 0.5)',
+                tension: 0.2
             },
             {
                 label: 'Expenses',
-                data: allDates.map(date => expenseByDate[date] || 0),
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            },
-            {
-                label: 'Budget',
-                data: allDates.map(date => budgetByDate[date] || 0),
-                backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                data: expensesData,
+                borderColor: 'red',
+                backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                tension: 0.2
             }
         ]
     };
 
     const options = {
         responsive: true,
+        maintainAspectRatio: false,
+        animation: {
+            duration: 25,
+            easing: 'easeInOutQuart',
+        },
         scales: {
             x: {
-                stacked: false,
+                title: {
+                    display: true,
+                    text: 'Date',
+                    color: '#333',
+                    font: {
+                        family: 'Helvetica',
+                        size: 14,
+                        weight: 'bold',
+                    },
+                },
+                ticks: {
+                    color: '#666',
+                },
             },
             y: {
-                stacked: false
-            }
+                title: {
+                    display: true,
+                    text: 'Amount',
+                    color: '#333',
+                    font: {
+                        family: 'Helvetica',
+                        size: 14,
+                        weight: 'bold',
+                    },
+                },
+                ticks: {
+                    color: '#666',
+                },
+            },
         },
         plugins: {
             legend: {
-                position: 'top',
+                labels: {
+                    color: '#333',
+                    font: {
+                        family: 'Helvetica',
+                        size: 12,
+                    },
+                },
             },
             tooltip: {
-                mode: 'index',
-                intersect: false,
-            }
-        }
+                backgroundColor: '#ffffff',
+                titleColor: '#333',
+                bodyColor: '#666',
+                borderColor: '#ddd',
+                borderWidth: 1,
+                cornerRadius: 4,
+                caretSize: 6,
+                xPadding: 10,
+                yPadding: 10,
+            },
+        },
     };
 
     return (
         <ChartStyled>
-            <Bar data={data} options={options} />
+            <Line data={data} options={options} />
         </ChartStyled>
     );
 }
