@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from myapi.models import Profile
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view,  permission_classes, authentication_classes
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model, login, logout
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from .serializers import UserRegisterSerializer, UserLoginSerializer, UserSerializer
 from rest_framework import permissions, status
 from .validations import custom_validation, validate_email, validate_password
@@ -13,6 +12,8 @@ from django.contrib.auth.decorators import login_required
 from myapi.forms import UserUpdateForm, ProfileUpdateForm
 from django.contrib import messages
 import sweetify
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework import status, permissions
 
 
 # @api_view(['GET'])
@@ -54,7 +55,6 @@ class UserLogout(APIView):
 		logout(request)
 		return Response(status=status.HTTP_200_OK)
 
-
 class UserView(APIView):
 	permission_classes = (permissions.IsAuthenticated,)
 	authentication_classes = (SessionAuthentication,)
@@ -63,8 +63,14 @@ class UserView(APIView):
 		serializer = UserSerializer(request.user)
 		return Response({'user': serializer.data}, status=status.HTTP_200_OK)
 	
+	def put(self, request):
+		serializer = UserSerializer(request.user, data=request.data)
+		if serializer.is_valid():
+				serializer.save()
+				return Response(serializer.data, status=status.HTTP_200_OK)
+		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 	
-	
+
 @login_required
 def profile(request):
 	profile = Profile.objects.get(user=request.user)
