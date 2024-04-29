@@ -4,6 +4,7 @@ import Logo from "../../../public/logo.png"
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from '../../components/ErrorAlert';
+import { Link } from 'react-router-dom';
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
@@ -154,7 +155,9 @@ function Login() {
                   </div>
                   <div className="-m-2 pt-1 flex flex-col justify-center">
                     {/* <div className="flex justify-center font-bold text-blue-600 text-sm cursor-pointer rounded-full" href="#">Forgot password?</div> */}
-                    <div className='flex justify-center mt-4 text-xs sm:text-sm'><p className=""> Dont have an account ? <span className="cursor-pointer font-bold text-blue-600 text-sm text-blue-600"> Join free today</span></p></div>
+                    <div className='flex justify-center mt-4 text-xs sm:text-sm'><p className=""> Dont have an account ? <Link to="../register">
+                      <span className="cursor-pointer font-bold text-blue-600 text-sm text-blue-600"> Join free today
+                      </span></Link></p></div>
                   </div>
                 </div>
               </div>
