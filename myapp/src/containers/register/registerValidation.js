@@ -22,7 +22,9 @@ function Validation(values) {
     if(values.password === "") {
         error.password = "Password should not be empty"
     }
-    else{
+    else if (values.password.length < 8) {
+        error.password = "Password should be longer than 8 characters"
+    }else{
         error.password = ""
     }
     return error
