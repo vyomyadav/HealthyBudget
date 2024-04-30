@@ -79,7 +79,7 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost',
     'http://127.0.0.1',
     'http://0.0.0.0',
-    'http://http://18.222.62.110'
+    'http://18.222.62.110'
 ]
 
 CSRF_TRUSTED_ORIGINS = [ 'http://localhost', 'http://127.0.0.1', 'http://18.222.62.110/' ]
@@ -104,7 +104,7 @@ CSRF_COOKIE_NAME = "XSRF-TOKEN"
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',  # React default port = 3000
     'http://localhost:8000',  # Django default port = 8000
-    'http://18.222.62.110:8000'
+    'http://18.222.62.110'
 )
 
 ROOT_URLCONF = 'HealthyBudget.urls'
