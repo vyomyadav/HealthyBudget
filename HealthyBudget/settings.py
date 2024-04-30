@@ -83,6 +83,8 @@ CORS_ALLOWED_ORIGINS = [
 
 CSRF_TRUSTED_ORIGINS = [ 'http://localhost', 'http://127.0.0.1' ]
 
+SECURE_SSL_REDIRECT=True
+
 
 ALLOWED_HOSTS = [
     'localhost',
