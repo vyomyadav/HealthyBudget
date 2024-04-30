@@ -87,11 +87,8 @@ CSRF_TRUSTED_ORIGINS = [ 'http://localhost', 'http://127.0.0.1', 'http://18.222.
 SECURE_SSL_REDIRECT=False
 
 
-ALLOWED_HOSTS = [
-    'localhost',
-    '127.0.0.1'
-    '18.222.62.110'
-]
+ALLOWED_HOSTS = ['*']
+
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:8000',
     'http://18.222.62.110:8000'
