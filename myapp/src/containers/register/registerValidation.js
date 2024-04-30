@@ -27,7 +27,19 @@ function Validation(values) {
     }else{
         error.password = ""
     }
+
+    if(values.confirmPassword === "") {
+        error.confirmPassword = "Confirm Password should not be empty"
+    }
+    else if (values.confirmPassword !== values.password) {
+        error.confirmPassword = "Password didn't match"
+    }
+    else{
+        error.confirmPassword = ""
+    }
+
     return error
+
 }
 
 export default Validation;
