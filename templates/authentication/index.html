@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Authentication</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .content-container {
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissable fade show" role="alert">
+        <strong>Message:</strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+            <span aria-hidden="true">&times;</span>
+        </button> 
+    </div>
+    {% endfor %}
+
+    <div class="content-container">
+
+        <h3>Welcome to Healthy Budget</h3>
+
+        {% if user.is_authenticated %}
+        <h3>Hello {{fname}}</h3>
+        <h4>You're successfully logged in.</h4>
+        <button type="submit"><a href="/signout">SignOut</a></button>
+
+        {% else %}
+        <button type="submit"><a href="/signup">SignUp</a></button>
+        <button type="submit"><a href="/signin">SignIn</a></button>
+        {% endif %}
+
+    </div>
+
+    <script src="" async defer></script>
+</body>
+</html>
