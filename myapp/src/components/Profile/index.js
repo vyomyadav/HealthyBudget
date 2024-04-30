@@ -123,7 +123,6 @@ function Profile() {
         client.get(
             '/api/user'
         ).then(function (res) {
-            console.log(res.data.user)
             setUser(res.data.user)
             setProfile({
                 first_name: res.data.user.first_name,
@@ -191,9 +190,9 @@ function Profile() {
             <ProfilePhotoWrapper>
             
             <ProfilePhoto>
-                {user.profilePhoto ? (
+                {user.profile_photo ? (
                 <img
-                    src={URL.createObjectURL(user.profile_photo)}
+                    src={user.profile_photo.slice(user.profile_photo.lastIndexOf("avatars/"))}
                     alt="Profile"
                 />
                 ) : (
