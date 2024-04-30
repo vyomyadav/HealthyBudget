@@ -10,7 +10,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.withCredentials = true;
 const client = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: `${process.env.REACT_APP_BACKEND_PORT}`,
 })
 
 function Register() {
@@ -55,7 +55,7 @@ function Register() {
       return;
     }
     // Proceed with form submission
-    axios.post('http://localhost:8000/api/register', formValues)
+    axios.post(`${process.env.REACT_APP_BACKEND_PORT}/api/register`, formValues)
       .then(res => {
         console.log("Registered");
         navigate('/login'); // redirect to log in page

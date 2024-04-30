@@ -1,21 +1,3 @@
-// import React, {useEffect} from "react";
-// import { Navigate, Route, Routes } from "react-router-dom";
-// import Routers from "./containers/routes";
-
-
-// const App = () => (
-//   <>
-//     <div className="bg-background flex flex-col bg-cover min-h-screen bg-center">
-//       <Routes>
-//         <Route exact path="" element={<Navigate to="/login" />} />
-//         <Route path="/*" element={<Routers />} />
-//       </Routes>
-//     </div>
-//   </>
-// )
-
-// export default App
-
 import React, { useEffect } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Routers from "./containers/routes";
@@ -25,7 +7,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.withCredentials = true;
 const client = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: process.env.REACT_APP_BACKEND_PORT,
 })
 
 const App = () => {

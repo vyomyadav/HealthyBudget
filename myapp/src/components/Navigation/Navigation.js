@@ -9,7 +9,7 @@ axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.withCredentials = true;
 const client = axios.create({
-    baseURL: "http://localhost:8000",
+    baseURL: process.env.REACT_APP_BACKEND_PORT,
 })
 
 function Navigation({ active, setActive }) {
