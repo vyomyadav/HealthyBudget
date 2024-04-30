@@ -7,7 +7,6 @@ import { menuItems } from "../../utils/menuItems";
 
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
-axios.defaults.withCredentials = true;
 const client = axios.create({
     baseURL: process.env.REACT_APP_BACKEND_PORT,
 })
