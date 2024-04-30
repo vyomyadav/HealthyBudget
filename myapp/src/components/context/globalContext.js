@@ -56,7 +56,7 @@ export const GlobalProvider = ({ children }) => {
 
     // Calculate balance
     const totalBalance = () => {
-        return totalIncome() - totalExpenses();
+        return (totalIncome() - totalExpenses()).toFixed(2);
     };
 
     // Get recent transactions for history
