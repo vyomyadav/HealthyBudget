@@ -19,12 +19,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from rest_framework.authtoken.views import obtain_auth_token
 from . import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('authentication.urls')),
+    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
     path('api/', include('myapi.urls')),
     path('budget/transactions/add/', views.add_transaction, name='add_transaction'),
     path('budget/transactions/', views.get_transactions, name='get_transactions'),
