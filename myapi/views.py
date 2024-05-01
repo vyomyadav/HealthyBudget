@@ -34,7 +34,7 @@ class UserRegister(APIView):
 
 
 class UserLogin(APIView):
-	permission_classes = (permissions.AllowAny,)
+	permission_classes = (permissions.IsAuthenticated,)
 	authentication_classes = (SessionAuthentication,)
 	##
 	def post(self, request):
