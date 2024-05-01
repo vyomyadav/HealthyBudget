@@ -23,7 +23,7 @@ function Validation(values) {
         error.password = "Password should not be empty"
     }
     else if (!password_pattern.test(values.password)) {
-        error.password = "Password does not meet security requirements. Password must include: at least one digit, one uppercase letter, one lowercase letter, one special character (!@#$%^&*), and be at least 8 characters long without common passwords, sequential or repetitive characters.";
+        error.password = "Password does not meet security requirements. Password must include: at least one digit, one uppercase letter, one lowercase letter, no special character (!@#$%^&*), and be at least 8 characters long.";
     }else{
         error.password = ""
     }

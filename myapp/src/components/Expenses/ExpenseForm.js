@@ -17,6 +17,10 @@ function ExpenseForm() {
         type: 'expense' // Explicitly setting the transaction type
     });
 
+    const [peopleCount, setPeopleCount] = useState(1);
+    const [emailAddresses, setEmailAddresses] = useState([]);
+
+
     const { title, amount, date, category, description } = inputState;
 
     const handleInput = name => e => {
