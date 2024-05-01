@@ -22,8 +22,8 @@ function Validation(values) {
     if(values.password === "") {
         error.password = "Password should not be empty"
     }
-    else if (values.password.length < 8) {
-        error.password = "Password should be longer than 8 characters"
+    else if (!password_pattern.test(values.password)) {
+        error.password = "Password does not meet security requirements. Password must include: at least one digit, one uppercase letter, one lowercase letter, one special character (!@#$%^&*), and be at least 8 characters long without common passwords, sequential or repetitive characters.";
     }else{
         error.password = ""
     }
