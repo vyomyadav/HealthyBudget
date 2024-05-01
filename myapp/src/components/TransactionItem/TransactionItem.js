@@ -35,6 +35,7 @@ function TransactionItem({
     const useSendEmails = (emailAddresses, splitAmount, description) => {
         emailAddresses.forEach((emailAddress) => {
             const templateParams = {
+                to_name: "Friend",
                 to_email: emailAddress,
                 split_amount: splitAmount.toFixed(2),
                 from_name: 'Healthy Budget',

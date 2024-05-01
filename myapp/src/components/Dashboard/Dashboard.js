@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import Logo from "../../../public/favicon.ico";
 import History from '../../History/History';
 import { InnerLayout } from '../../styles/Layouts';
 import { dollar } from '../../utils/Icons';
 import Chart from '../Chart/Chart';
 import ApexChart from '../RadialChart';
 import { useGlobalContext } from '../context/globalContext';
-import Logo from "../../../public/favicon.ico"
 
 
 function Dashboard({ setActive }) {
@@ -54,7 +54,7 @@ function Dashboard({ setActive }) {
                     </div>
                 </div>
             )}  
-            {((state === 1 ) && (totalIncome() !== 0 ) && (totalExpenses() !== 0 ) && (totalBalance() !== 0)) && (
+            {((state === 1 ) && ((totalIncome() !== 0 ) || (totalExpenses() !== 0 ) || (totalBalance() !== 0))) && (
                 <DashboardStyled>
                     <InnerLayout>
                         <div className="stats-con">
