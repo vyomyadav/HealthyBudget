@@ -96,7 +96,6 @@ const BudgetItemStyled = styled.div`
                     align-items: center;
                     gap: 0.5rem;
                     color: var(--primary-color);
-                    opacity: 0.8;
                 }
             }
         }

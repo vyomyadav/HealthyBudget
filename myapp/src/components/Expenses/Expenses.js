@@ -37,7 +37,7 @@ function Expenses() {
                                 category={category} 
                                 indicatorColor="var(--color-red)" // Color for expenses, could be different
                                 deleteItem={() => deleteTransaction(id)}
-                                type={expense.type}
+                                type={type}
                             />
                         })}
                     </div>

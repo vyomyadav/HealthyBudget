@@ -1,4 +1,5 @@
-import React from "react";
+import emailjs from '@emailjs/browser';
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
     bitcoin, book, calender, card, circle, clothing, comment, dollar,
@@ -6,6 +7,7 @@ import {
 } from "../../utils/Icons";
 import { dateFormat } from "../../utils/dateFormat";
 import Button from "../Button/Button";
+import SplitExpenseModal from "../SplitForm/Split";
 
 function TransactionItem({
     id,
@@ -18,6 +20,45 @@ function TransactionItem({
     indicatorColor,
     type
 }) {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [peopleCount, setPeopleCount] = useState(1);
+    const [emailAddresses, setEmailAddresses] = useState([]);
+
+    const openModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const useSendEmails = (emailAddresses, splitAmount, description) => {
+        emailAddresses.forEach((emailAddress) => {
+            const templateParams = {
+                to_name: "Friend",
+                to_email: emailAddress,
+                split_amount: splitAmount.toFixed(2),
+                from_name: 'Healthy Budget',
+                message: `Hello! Just a reminder that you owe $${splitAmount.toFixed(2)} as your share of the expense for ${description}. Please let us know if you have any questions or require further details. Thank you for settling this at your earliest convenience!`
+            };
+    
+            emailjs.send('service_ygjkefo', 'template_ezly57f', templateParams, '3Dgn99r0A5F3nCRXF')
+                .then((response) => {
+                    console.log('Email successfully sent to:', emailAddress, response.text);
+                }, (error) => {
+                    console.log('Failed to send email to:', emailAddress, error.text);
+                });
+        });
+    };
+
+    const useHandleSplitExpense = (emailAddresses) => {
+        const splitAmount = amount / peopleCount;
+        const sendDescription = description ? `(${description})` : '';
+        useSendEmails(emailAddresses, splitAmount, sendDescription);
+        closeModal();
+    };
+
+
     // Dynamically determine the icon based on type and category
     const categoryIcon = () => {
         if (type === 'income') {
@@ -53,15 +94,26 @@ function TransactionItem({
                 {categoryIcon()}
             </div>
             <div className="content">
-                <h5>{title}</h5>
+                <div className='flex'>
+                <div className='text-xl font-semibold'>{title}</div>
+                <div className="text pl-12">
+                        
+                        <span>
+                            {comment}
+                        </span>
+                        <span className='pl-2'>
+                            {description}
+                        </span>
+                </div>
+                </div>
                 <div className="inner-content">
                     <div className="text">
                         <p>{dollar} {amount}</p>
                         <p>{calender} {dateFormat(date)}</p>
-                        <p>
+                        {/* <p>
                             {comment}
                             {description}
-                        </p>
+                        </p> */}
                     </div>
                     <div className="btn-con">
                         <Button 
@@ -75,8 +127,29 @@ function TransactionItem({
                             onClick={() => deleteItem(id)}
                         />
                     </div>
+                    <div className="btn-con">
+                        <Button 
+                            name={'Split'}
+                            bPad={'.8rem 1.6rem'}
+                            bRad={'30px'}
+                            bg={'var(--color-accent)'}
+                            color={'#fff'}
+                            onClick={openModal}
+                        >
+                            Split Expense
+                        </Button>
+                    </div>
                 </div>
             </div>
+            <SplitExpenseModal 
+                            isOpen={isModalOpen}
+                            onClose={closeModal}
+                            peopleCount={peopleCount}
+                            setPeopleCount={setPeopleCount}
+                            onSubmit={useHandleSplitExpense}
+                            setEmailAddresses={setEmailAddresses}
+            /> 
+
         </TransactionItemStyled>
     )
 }
@@ -119,7 +192,6 @@ const TransactionItemStyled = styled.div`
             position: relative;
             &::before{
                 content: '';
-                position: absolute;
                 left: 0;
                 top: 50%;
                 transform: translateY(-50%);
@@ -143,7 +215,6 @@ const TransactionItemStyled = styled.div`
                     align-items: center;
                     gap: 0.5rem;
                     color: var(--primary-color);
-                    opacity: 0.8;
                 }
             }
         }
