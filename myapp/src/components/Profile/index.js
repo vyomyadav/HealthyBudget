@@ -162,7 +162,6 @@ function Profile() {
     };
 
     const handleSaveChanges = () => {
-        console.log("Profile Updated and here it is:", profile);
         axios.defaults.xsrfCookieName = "csrftoken";
         axios.defaults.xsrfHeaderName = "X-CSRFToken";
         client.put('/api/user', profile)

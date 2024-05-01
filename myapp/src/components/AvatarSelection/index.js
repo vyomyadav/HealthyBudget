@@ -84,7 +84,6 @@ const AvatarSelectionModel = ({onSelect}) => {
   }
 
   useEffect(() => {
-    console.log(photoId)
     onSelect(photoId)
     closeModal();
   }, [photoId])

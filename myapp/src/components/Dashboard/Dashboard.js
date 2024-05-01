@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import History from '../../History/History';
 import { InnerLayout } from '../../styles/Layouts';
@@ -10,6 +10,8 @@ import Logo from "../../../public/favicon.ico"
 
 
 function Dashboard({ setActive }) {
+
+    const [ state, setState ] = useState(0);
     const {
         transactions,
         totalIncome,
@@ -22,6 +24,7 @@ function Dashboard({ setActive }) {
     useEffect(() => {
         getTransactions(); // Fetch all transactions on component mount
         getBudgets(); // Fetch all budgets on component mount
+        setState(1);
     }, [])
 
     // Min and Max calculations for transactions based on type
@@ -41,20 +44,17 @@ function Dashboard({ setActive }) {
     const handleHistoryClick = () => setActive(2);
     const handleBudgetClick = () => setActive(5);
 
-    console.log(totalBalance())
-    console.log(totalIncome())
-    console.log(totalExpenses())
-
     return (
         <>
-            {((totalIncome() === 0 ) && (totalExpenses() === 0 ) && (totalBalance() === 0)) ? (
+            {((state === 1 ) && (totalIncome() === 0 ) && (totalExpenses() === 0 ) && (totalBalance() === 0)) && (
                 <div className='flex justify-center items-center w-full h-full'>
                     <div className='flex flex-col items-center'>
                         <div className='w-40 pb-5'><img src={Logo} alt="" /></div>
                         <div className='font-semibold text-2xl text-black'>Embark on Your Budgeting Adventure with HealthyBudget!</div>
                     </div>
                 </div>
-            ) : (
+            )}  
+            {((state === 1 ) && (totalIncome() !== 0 ) && (totalExpenses() !== 0 ) && (totalBalance() !== 0)) && (
                 <DashboardStyled>
                     <InnerLayout>
                         <div className="stats-con">

@@ -20,7 +20,6 @@ function Navigation({ active, setActive }) {
             client.get(
                 '/api/user'
             ).then(function (res) {
-                console.log(res.data.user)
                 setUser(res.data.user)
             }).catch(function (error) {
                 if (error.response && error.response.status === 403) {
