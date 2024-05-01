@@ -98,7 +98,7 @@ function Register() {
                         First Name
                       </label>
                       {/* {errors.username && (
-                      <span className="text-danger"> {errors.email}</span>
+                      <span className="text-red-500"> {errors.email}</span>
                     )} */}
                     </div>
                     <div className="relative">
@@ -118,7 +118,7 @@ function Register() {
                         Last Name
                       </label>
                       {/* {errors.username && (
-                      <span className="text-danger"> {errors.email}</span>
+                      <span className="text-red-500"> {errors.email}</span>
                     )} */}
                     </div>
                     <div className="relative">
@@ -138,7 +138,7 @@ function Register() {
                         Phone Number
                       </label>
                       {/* {errors.username && (
-                      <span className="text-danger"> {errors.email}</span>
+                      <span className="text-red-500"> {errors.email}</span>
                     )} */}
                     </div>
                     <div className="relative">
@@ -158,7 +158,7 @@ function Register() {
                         Email Address
                       </label>
                       {errors.email && (
-                        <span className="text-danger"> {errors.email}</span>
+                        <span className="text-red-500"> {errors.email}</span>
                       )}
                     </div>
                     <div className="relative">
@@ -178,7 +178,7 @@ function Register() {
                         Password
                       </label>
                       {errors.password && (
-                        <span className="text-danger"> {errors.password}</span>
+                        <span className="text-red-500"> {errors.password}</span>
                       )}
                     </div>
                     <div className="relative">
