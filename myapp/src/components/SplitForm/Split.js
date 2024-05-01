@@ -20,13 +20,16 @@ function SplitExpenseModal({ isOpen, onClose, onSubmit, peopleCount, setPeopleCo
     return isOpen ? (
         <ModalBackground>
             <ModalContainer>
-                <h2>Split Expense</h2>
+                <div className='flex flex-col p-12 text-center w-full'>
+                <div className='text-2xl font-extrabold py-5 w-80'>Split Expense</div>
                 <input
                     type="number"
                     value={peopleCount}
                     onChange={(e) => setPeopleCount(e.target.value)}
                     placeholder="Number of People"
+                    className='flex text-center'
                 />
+                <div className='flex flex-col p-2'>
                 {Array.from({ length: peopleCount }, (_, index) => (
                     <input
                         key={index}
@@ -34,14 +37,19 @@ function SplitExpenseModal({ isOpen, onClose, onSubmit, peopleCount, setPeopleCo
                         value={localEmailAddresses[index] || ''}
                         onChange={(e) => handleEmailChange(index, e.target.value)}
                         placeholder={`Email ${index + 1}`}
+                        className='flex text-center py-3'
                     />
                 ))}
-                <Button onClick={handleSubmit} name="Submit" bPad=".8rem 1.6rem" bRad="30px" bg="var(--color-accent)" color="#fff">
+                </div>
+                <div className='flex flex-row pt-5 text-center justify-center gap-x-12'>
+                <Button onClick={handleSubmit} className="mx-2" name="Submit" bPad=".8rem 1.6rem" bRad="30px" bg="var(--color-accent)" color="#fff">
                     Submit
                 </Button>
                 <Button onClick={onClose} name="Cancel" bPad=".8rem 1.6rem" bRad="30px" bg="var(--color-accent)" color="#fff">
                     Cancel
                 </Button>
+                </div>
+                </div>
             </ModalContainer>
         </ModalBackground>
     ) : null;

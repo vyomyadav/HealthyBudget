@@ -93,15 +93,26 @@ function TransactionItem({
                 {categoryIcon()}
             </div>
             <div className="content">
-                <h5>{title}</h5>
+                <div className='flex'>
+                <div className='text-xl font-semibold'>{title}</div>
+                <div className="text pl-12">
+                        
+                        <span>
+                            {comment}
+                        </span>
+                        <span className='pl-2'>
+                            {description}
+                        </span>
+                </div>
+                </div>
                 <div className="inner-content">
                     <div className="text">
                         <p>{dollar} {amount}</p>
                         <p>{calender} {dateFormat(date)}</p>
-                        <p>
+                        {/* <p>
                             {comment}
                             {description}
-                        </p>
+                        </p> */}
                     </div>
                     <div className="btn-con">
                         <Button 
@@ -180,7 +191,6 @@ const TransactionItemStyled = styled.div`
             position: relative;
             &::before{
                 content: '';
-                position: absolute;
                 left: 0;
                 top: 50%;
                 transform: translateY(-50%);
@@ -204,7 +214,6 @@ const TransactionItemStyled = styled.div`
                     align-items: center;
                     gap: 0.5rem;
                     color: var(--primary-color);
-                    opacity: 0.8;
                 }
             }
         }
