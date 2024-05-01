@@ -115,6 +115,21 @@ function TransactionItem({
                             {description}
                         </p> */}
                     </div>
+                    
+                    <div className="btn-con">
+                        {type === 'expense' && (
+                            <Button 
+                                name={'Split'}
+                                bPad={'.8rem 1.6rem'}
+                                bRad={'30px'}
+                                bg={'var(--color-accent)'}
+                                color={'#fff'}
+                                onClick={openModal}
+                            >
+                                Split Expense
+                            </Button>
+                        )}
+                    </div>
                     <div className="btn-con">
                         <Button 
                             icon={trash}
@@ -126,18 +141,6 @@ function TransactionItem({
                             hColor={'var(--color-green)'}
                             onClick={() => deleteItem(id)}
                         />
-                    </div>
-                    <div className="btn-con">
-                        <Button 
-                            name={'Split'}
-                            bPad={'.8rem 1.6rem'}
-                            bRad={'30px'}
-                            bg={'var(--color-accent)'}
-                            color={'#fff'}
-                            onClick={openModal}
-                        >
-                            Split Expense
-                        </Button>
                     </div>
                 </div>
             </div>
